@@ -14,6 +14,9 @@ import routes from '../common/routes';
 import { createLocation } from 'history';
 import cors from 'cors';
 
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
+
 import User from './models/User.js';
 import passport from 'passport';
 require('../../config/passport')(passport);
@@ -65,11 +68,13 @@ app.get('/*', function(req, res) {
     const store = configureStore();
 
     const InitialView = (
-      <Provider className="root" store={store}>
-        <div style={{height: '100%'}}>
-          <RouterContext {...renderProps} />
-        </div>
-      </Provider>
+      <MuiThemeProvider muiTheme={getMuiTheme(null, { userAgent: 'all' })}>
+        <Provider className="root" store={store}>
+          <div style={{height: '100%'}}>
+            <RouterContext {...renderProps} />
+          </div>
+        </Provider>
+      </MuiThemeProvider>
     );
 
     const initialState = store.getState();
@@ -94,8 +99,6 @@ function renderFullPage(html, initialState) {
     <!doctype html>
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
         <link rel="icon" href="./favicon.ico" type="image/x-icon" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />

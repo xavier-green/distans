@@ -1,11 +1,9 @@
 import { Redirect, Router, Route, IndexRoute } from 'react-router';
 import React from 'react';
 
-import SignIn from './components/SignIn';
 import ChatContainer from './containers/ChatContainer';
-import Register from './containers/Register';
-import SignUp from './components/SignUp';
-import WelcomePage from './components/WelcomePage';
+import RegisterUser from './containers/Register';
+import RegisterPsy from './containers/Register';
 import App from './containers/App';
 import {checkAuth} from './actions/authActions';
 
@@ -16,13 +14,10 @@ const requireAuth = (nextState, replace) => {
 }
 const Routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={WelcomePage} />
-    <Route path="/welcome" component={WelcomePage} />
-    <Route path="/signin" component={SignIn} />
-    <Route path="/signup" component={SignUp} />
     <Route path="/chat" component={ChatContainer}>
     </Route>
-    <Route path="/register" component={Register}/>
+    <Route path="/register/psy" component={RegisterPsy}/>
+    <Route path="/register/utilisateur" component={RegisterUser}/>
   </Route>
 );
 

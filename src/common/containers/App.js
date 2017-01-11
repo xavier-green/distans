@@ -3,6 +3,9 @@ import { Link } from 'react-router';
 import {initEnvironment} from '../actions/actions';
 import { connect } from 'react-redux';
 
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 class App extends React.Component {
 
   componentDidMount() {

@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import { Button } from 'react-bootstrap';
 import ListItem from 'material-ui/lib/lists/list-item';
 
 const ChannelListItem = (props) => {

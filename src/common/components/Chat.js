@@ -1,16 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
-import Channels from './Channels';
 import * as actions from '../actions/actions';
 import * as authActions from '../actions/authActions';
 import TypingListItem from './TypingListItem';
-import { Modal, DropdownButton, MenuItem, Button, Navbar, NavDropdown, Nav, NavItem } from 'react-bootstrap';
 import IconButton from 'material-ui/lib/icon-button';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftBar from './LeftBar';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 export default class Chat extends Component {
 
@@ -120,6 +119,19 @@ export default class Chat extends Component {
       <div>
         <AppBar
           title={title}
+          iconElementRight={
+            <IconMenu
+              iconButtonElement={
+                <IconButton><MoreVertIcon /></IconButton>
+              }
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+              <MenuItem primaryText="Refresh" />
+              <MenuItem primaryText="Help" />
+              <MenuItem primaryText="Sign out" />
+            </IconMenu>
+          }
         />
         <LeftBar socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} />
         <div id="sbottom" style={{width:'73%',height:'80vh',overflowY:'scroll',overflowX:'hidden'}}>

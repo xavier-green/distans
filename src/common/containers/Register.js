@@ -14,14 +14,12 @@ import Confirm from 'material-ui/lib/svg-icons/action/lock-outline';
 import {red500, yellow500, blue500} from 'material-ui/lib/styles/colors';
 import RadioButton from 'material-ui/lib/radio-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
-import StarEmpty from 'material-ui/lib/svg-icons/toggle/star-border';
-import StarFull from 'material-ui/lib/svg-icons/toggle/star';
 import Email from 'material-ui/lib/svg-icons/communication/email';
 import Dates from 'material-ui/lib/svg-icons/action/date-range';
 import Code from 'material-ui/lib/svg-icons/action/redeem';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
-
-import { Col, Row } from 'react-bootstrap';
+import SelectField from 'material-ui/lib/select-field';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -32,11 +30,16 @@ var styles = {
     width: '50px',
     verticalAlign: 'middle',
     marginRight: '30px'
-  },
-  nolign: {
-    lineHeight: 'normal'
   }
 };
+
+const items = [
+  <MenuItem key={1} value={1} primaryText="Never"/>,
+  <MenuItem key={2} value={2} primaryText="Every Night"/>,
+  <MenuItem key={3} value={3} primaryText="Weeknights"/>,
+  <MenuItem key={4} value={4} primaryText="Weekends"/>,
+  <MenuItem key={5} value={5} primaryText="Weekly"/>,
+];
 
 class Register extends React.Component {
 
@@ -45,18 +48,19 @@ class Register extends React.Component {
   }
 
   _handleChange(element,e) {
-    var data = {};
-    data[element] = e.target.value;
-    this.props.onEdit(data);
+    // var data = {};
+    // this.setState({element:e.target.value});
+    // console.log(this.state);
   }
 
   render() {
+    var registerType = this.props.params.type;
     return (
       <div>
         <AppBar
           title="Création de compte"
         />
-        <Row className="show-grid" style={{marginLeft:'22%',marginRight:'22%'}}>
+        <div style={{marginLeft:'15%',marginRight:'15%',marginTop:'50px'}}>
           <Card>
             <CardTitle title="Information obligatoire" subtitle="L'email et le numéro de téléphone ne sont pas obligatoires pour vous créer un compte. Si vous oubliez votre identifiant ou mot de passe sans un email/numéro de secours vous n'aurez aucun moyen de récuperer votre compte" />
             <CardText>
@@ -82,8 +86,43 @@ class Register extends React.Component {
                 onChange={::this._handleChange.bind(this,'confirmation')}
               /><br />
             </CardText>
+            <CardTitle title="Information Optionnelle" subtitle="Ces informations sont optionnelles. Néanmoins, sachez qu'elles restent parfaitement confidentielles et que sans que acceptiez de dévoiler votre identité elles seront invisibles au psychologues." />
+            <CardText>
+              <Email color={blue500} style={styles.icon}/>
+              <TextField
+                floatingLabelText="Email"
+                underlineStyle={{color:'rgb(0, 188, 212)'}}
+                onChange={this._handleChange.bind(this,'email')}
+              /><br /><br />
+              <RadioButtonGroup name="sex" style={{ display: 'flex' }} onChange={this._radioChange}>
+                <RadioButton
+                  style={{ width: 'auto' }}
+                  value="Homme"
+                  label="Homme"
+                  labelStyle={{fontSize:'25px',paddingTop:'15px'}}
+                />
+                <RadioButton
+                  style={{ width: 'auto',paddingLeft:'50px' }}
+                  value="Femme"
+                  label="Femme"
+                  labelStyle={{fontSize:'25px',paddingTop:'15px'}}
+                />
+              </RadioButtonGroup><br />
+              <div style={{display:'flex'}}>
+                <Dates color={blue500} style={styles.icon}/>
+                <DatePicker hintText="Date de naissance" mode="landscape"/>
+              </div>
+            </CardText>
+            <CardTitle title="Psychologue" subtitle="Veuillez choisir le psychologue le plus adapté à vos besoins. Nous vous garantissons que nous ferons tout notre possible pour vous trouver un psychologue qui vous mettra à l'aise et saura vous aider." />
+            <CardText>
+            <SelectField
+              floatingLabelText="Choisissez une catégorie de psychologue"
+            >
+              {items}
+            </SelectField>
+            </CardText>
           </Card>
-        </Row>
+        </div>
       </div>
     );
   }
