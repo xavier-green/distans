@@ -81,7 +81,7 @@ app.get('/*', function(req, res) {
     const InitialView = (
       <MuiThemeProvider muiTheme={getMuiTheme(null, { userAgent: 'all' })}>
         <Provider className="root" store={store}>
-          <div style={{height: '100%'}}>
+          <div>
             <RouterContext {...renderProps} />
             {process.env.NODE_ENV !== 'production' && <DevTools />}
           </div>
@@ -117,7 +117,7 @@ function renderFullPage(html, initialState) {
         <title>Distans</title>
       </head>
       <body>
-        <container id="react">${html}</container>
+        <container id="react"><div>${html}</div></container>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>

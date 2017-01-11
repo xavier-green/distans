@@ -20,6 +20,7 @@ ReactDOM.render(
   <Provider store={store}>
     <div style={{height: '100%'}}>
       <Router children={routes} history={browserHistory} />
+      {process.env.NODE_ENV !== 'production' && <DevTools />}
     </div>
   </Provider>,
   rootElement
