@@ -11,7 +11,8 @@ import {
   AUTH_SIGNUP,
   AUTH_SIGNUP_SUCCESS,
   AUTH_SIGNUP_FAIL,
-  RECEIVE_SOCKET
+  RECEIVE_SOCKET,
+  RECEIVE_FILE
 } from '../constants/ActionTypes';
 
 const initialState = {
