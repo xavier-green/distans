@@ -2,6 +2,7 @@ import * as types from '../constants/ActionTypes';
 import { browserHistory } from 'react-router';
 import fetch from 'isomorphic-fetch';
 import cookie from 'react-cookie';
+import axios from 'axios';
 
 export function receiveAuth() {
   const user = cookie.load('username');
@@ -9,6 +10,19 @@ export function receiveAuth() {
     type: types.AUTH_LOAD_SUCCESS,
     user
   }
+}
+
+export function putFile(data) {
+  return dispatch => {
+    return axios.post('/api/fileupload', data)
+      .then(json => dispatch(receiveFile(json)))
+      .catch(error => {throw error});
+  }
+}
+
+function receiveFile(json) {
+  console.log("File received");
+  console.log(json);
 }
 
 export function checkAuth() {

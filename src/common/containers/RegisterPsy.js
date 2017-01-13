@@ -73,9 +73,11 @@ class Register extends React.Component {
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
-    console.log('Accepted files: ', acceptedFiles);
-    console.log('Rejected files: ', rejectedFiles);
     var data = new FormData();
+    data.append('file', acceptedFiles[0]);
+    data.append('email','xav.green.95@gmail.com');
+    data.append('name','adeli')
+    this.props.dispatch(actions.putFile(data));
   }
 
   render() {
@@ -138,7 +140,7 @@ class Register extends React.Component {
             </CardText>
             <CardTitle title="Pièces à joindre" subtitle="Veuillez ajouter une photocopie de votre passeport et certificat ADELI pour finaliser l'inscription." />
             <CardText>
-              <Dropzone onDrop={this.onDrop}>
+              <Dropzone onDrop={::this.onDrop}>
                 <div>Try dropping some files here, or click to select files to upload.</div>
               </Dropzone>
             </CardText>

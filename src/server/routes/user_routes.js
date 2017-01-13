@@ -2,6 +2,10 @@
 
 var bodyparser = require('body-parser');
 var User = require('../models/User.js');
+var multer = require("multer");
+var upload = multer({ dest: __dirname+'/uploads/' });
+var path = require("path");
+var fs = require("fs");
 
 module.exports = function loadUserRoutes(router, passport) {
   router.use(bodyparser.json());
@@ -27,6 +31,20 @@ module.exports = function loadUserRoutes(router, passport) {
     // req.session.user = req.user;
     res.json(req.user);
   });
+
+  router.post('/fileupload', upload.any(), (req,res,next) => {
+    var uploadDir = path.join(__dirname, '/uploads');
+    var file = req.files[0];
+    var name = req.body.name+" - "+req.body.email+path.extname(file.originalname);
+    console.log("Saving file as: "+name);
+    fs.rename(file.path, path.join(uploadDir, name), (err) => {
+      if (err) {
+        res.json({success: false})
+      } else {
+        res.json({success: true})
+      }
+    });
+  })
 
   router.get('/signout', function(req, res) {
     req.logout();
