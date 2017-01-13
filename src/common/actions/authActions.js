@@ -23,6 +23,10 @@ export function putFile(data) {
 function receiveFile(json) {
   console.log("File received");
   console.log(json);
+  return {
+    type: types.RECEIVE_FILE,
+    json
+  }
 }
 
 export function checkAuth() {

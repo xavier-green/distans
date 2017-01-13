@@ -41,7 +41,7 @@ module.exports = function loadUserRoutes(router, passport) {
       if (err) {
         res.json({success: false})
       } else {
-        res.json({success: true})
+        res.json({success: true, type: req.body.name})
       }
     });
   })

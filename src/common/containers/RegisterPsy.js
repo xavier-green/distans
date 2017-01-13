@@ -157,6 +157,12 @@ class Register extends React.Component {
   }
 }
 
-const RegisterConnected = connect()(Register);
+function mapStateToProps(state) {
+  return {
+      user: state.auth.user
+  }
+}
+
+const RegisterConnected = connect(mapStateToProps)(Register);
 
 export default RegisterConnected;

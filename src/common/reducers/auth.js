@@ -20,7 +20,8 @@ const initialState = {
     username: null,
     id: null,
     socketID: null
-  }
+  },
+  files: []
 };
 
 export default function auth(state = initialState, action = {}) {
@@ -119,6 +120,17 @@ export default function auth(state = initialState, action = {}) {
         socketID: action.socketID
       }
     };
+  case RECEIVE_FILE:
+    if (action.success) {
+      return {
+        ...state,
+        file: [...state.files, action.type]
+      }
+    } else {
+      return {
+        ...state
+      }
+    }
   default:
     return state;
   }
