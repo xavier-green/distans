@@ -62,6 +62,8 @@ export function signOut() {
 }
 
 export function signUp(user) {
+  console.log("got dispatch");
+  console.log(user);
   return dispatch => {
     dispatch(requestSignUp())
     return fetch('/api/sign_up', {

@@ -8,10 +8,11 @@ var UserSchema = mongoose.Schema({
     password: String,
     email: String,
   },
+  profile: mongoose.Schema.Types.Mixed,
   type: Number, //0=utilisateur, 1=psychologue
   contacts: [{
-    id: Number,
-    name: String
+    id: Number, //id of channel
+    name: String //name of psy associé
   }]
 });
 

@@ -18,6 +18,7 @@ module.exports = function(passport) {
     passReqToCallback: true
   },
   function(req, username, password, done) {
+    var data = req.body;
     User.findOne({ 'local.username': username}, function(err, user) {
       if (err) {
         return done(err);
@@ -28,6 +29,16 @@ module.exports = function(passport) {
         var newUser = new User();
         newUser.local.username = username;
         newUser.local.password = newUser.generateHash(password);
+        newUser.local.email = data.email || null;
+        var profile = {
+          sex : data.sex || null,
+          psy : {
+            type : data.psy || null,
+            sex : data.psy_sex || null,
+            region : data.region || null
+          }
+        };
+        newUser.profile = profile;
         newUser.save(function(err, user) {
           if (err) {
             throw err;

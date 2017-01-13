@@ -2,8 +2,8 @@ import { Redirect, Router, Route, IndexRoute } from 'react-router';
 import React from 'react';
 
 import ChatContainer from './containers/ChatContainer';
-import RegisterUser from './containers/Register';
-import RegisterPsy from './containers/Register';
+import RegisterUser from './containers/RegisterUser';
+import RegisterPsy from './containers/RegisterPsy';
 import SignIn from './components/SignIn';
 import App from './containers/App';
 import {checkAuth} from './actions/authActions';
