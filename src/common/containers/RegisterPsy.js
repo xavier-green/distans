@@ -75,6 +75,7 @@ class Register extends React.Component {
   onDrop(acceptedFiles, rejectedFiles) {
     console.log('Accepted files: ', acceptedFiles);
     console.log('Rejected files: ', rejectedFiles);
+    var data = new FormData();
   }
 
   render() {

@@ -31,8 +31,6 @@ export default class Chat extends Component {
   }
   componentDidMount() {
     const { socket, user, dispatch, activeChannel } = this.props;
-    console.log("Props:");
-    console.log(this.props);
     socket.emit('chat mounted', user);
     // socket.emit('join channel', 123);
     socket.on('new bc message', msg =>
@@ -55,8 +53,6 @@ export default class Chat extends Component {
     );
   }
   componentDidUpdate() {
-    console.log("update:");
-    console.log(this.props);
     var objDiv = document.getElementById("sbottom");
     objDiv.scrollTop = objDiv.scrollHeight;
   }

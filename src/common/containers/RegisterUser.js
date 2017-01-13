@@ -107,12 +107,6 @@ class Register extends React.Component {
             </CardText>
             <CardTitle title="Information Optionnelle" subtitle="Ces informations sont optionnelles. Néanmoins, sachez qu'elles restent parfaitement confidentielles et que sans que acceptiez de dévoiler votre identité elles seront invisibles au psychologues." />
             <CardText>
-              <Email color={blue500} style={styles.icon}/>
-              <TextField
-                floatingLabelText="Email"
-                underlineStyle={{color:'rgb(0, 188, 212)'}}
-                onChange={::this._handleChange.bind(this,'email')}
-              /><br /><br />
               <RadioButtonGroup name="sex" style={{ display: 'flex' }} onChange={::this._handleChange.bind(this,'sex')}>
                 <RadioButton
                   style={{ width: 'auto' }}
@@ -124,7 +118,13 @@ class Register extends React.Component {
                   value="Homme"
                   label="Homme"
                 />
-              </RadioButtonGroup><br />
+              </RadioButtonGroup>
+              <Email color={blue500} style={styles.icon}/>
+              <TextField
+                floatingLabelText="Email"
+                underlineStyle={{color:'rgb(0, 188, 212)'}}
+                onChange={::this._handleChange.bind(this,'email')}
+              /><br /><br />
               <div style={{display:'flex'}}>
                 <Dates color={blue500} style={styles.icon}/>
                 <DatePicker hintText="Date de naissance" mode="landscape"/>
@@ -132,14 +132,6 @@ class Register extends React.Component {
             </CardText>
             <CardTitle title="Psychologue" subtitle="Veuillez choisir le psychologue le plus adapté à vos besoins. Nous vous garantissons que nous ferons tout notre possible pour vous trouver un psychologue qui vous mettra à l'aise et saura vous aider." />
             <CardText>
-            <SelectField
-              floatingLabelText="Choisissez une catégorie pour votre problème"
-              value={this.state.psy}
-              onChange={::this._selectChange}
-              style={{width:'70%'}}
-            >
-              {items}
-            </SelectField><br/>
             <RadioButtonGroup name="psy_sex" style={{ display: 'flex' }} onChange={::this._handleChange.bind(this,'psy_sex')}>
               <RadioButton
                 style={{ width: 'auto' }}
@@ -152,6 +144,14 @@ class Register extends React.Component {
                 label="Homme"
               />
             </RadioButtonGroup>
+            <SelectField
+              floatingLabelText="Choisissez une catégorie pour votre problème"
+              value={this.state.psy}
+              onChange={::this._selectChange}
+              style={{width:'70%'}}
+            >
+              {items}
+            </SelectField>
             <SelectField
               floatingLabelText="Choisissez votre région"
               value={this.state.region}
