@@ -3,14 +3,13 @@
 var mongoose = require('mongoose');
 
 var channelSchema = mongoose.Schema({
-  id: { type: Number, unique: true },
   psychologue: {
     name: String,
-    id: Number
+    id: mongoose.Schema.Types.ObjectId
   },
   utilisateur: {
     name: String,
-    id: Number
+    id: mongoose.Schema.Types.ObjectId
   }
 });
 

@@ -17,7 +17,10 @@ module.exports = function(router) {
 
   // query DB for messages for a specific channel
   router.get('/messages/:channelId', function(req, res) {
-    Message.find({channelId: req.params.channelId}, function(err, data) {
+    console.log("Looking for messages with id: "+req.params.channelId);
+    var ObjectId = require('mongoose').Types.ObjectId;
+    var query = { channelId: new ObjectId(req.params.channelId) };
+    Message.find(query, function(err, data) {
       if(err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
@@ -28,7 +31,11 @@ module.exports = function(router) {
 
   //post a new message to db
   router.post('/newmessage', function(req, res) {
-    var newMessage = new Message(req.body);
+    var ObjectId = require('mongoose').Types.ObjectId;
+    var copy = req.body;
+    var channelId = copy.channelId;
+    copy.channelId = new ObjectId(channelId);
+    var newMessage = new Message(copy);
     newMessage.save(function (err, data) {
       if(err) {
         console.log(err);

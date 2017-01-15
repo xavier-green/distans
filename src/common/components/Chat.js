@@ -18,7 +18,8 @@ export default class Chat extends Component {
     user: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     channels: PropTypes.array.isRequired,
-    activeChannel: PropTypes.number.isRequired,
+    account: PropTypes.string.isRequired,
+    activeChannel: PropTypes.string.isRequired,
     typers: PropTypes.array.isRequired,
     socket: PropTypes.object.isRequired
   };
@@ -31,6 +32,7 @@ export default class Chat extends Component {
   }
   componentDidMount() {
     const { socket, user, dispatch, activeChannel } = this.props;
+    console.log(this.props);
     socket.emit('chat mounted', user);
     // socket.emit('join channel', 123);
     socket.on('new bc message', msg =>
@@ -53,6 +55,8 @@ export default class Chat extends Component {
     );
   }
   componentDidUpdate() {
+    console.log("Update");
+    console.log(this.props);
     var objDiv = document.getElementById("sbottom");
     objDiv.scrollTop = objDiv.scrollHeight;
   }
@@ -68,16 +72,15 @@ export default class Chat extends Component {
   }
   changeActiveChannel(channel) {
     const { socket, activeChannel, dispatch } = this.props;
-    socket.emit('leave channel', activeChannel.id);
-    socket.emit('join channel', channel.id);
-    dispatch(actions.changeChannel(channel.id));
-    dispatch(actions.fetchMessages(channel.id));
+    socket.emit('leave channel', activeChannel);
+    socket.emit('join channel', channel._id);
+    dispatch(actions.changeChannel(channel._id));
+    dispatch(actions.fetchMessages(channel._id));
   }
   render() {
-    const { messages, socket, channels, activeChannel, typers, dispatch, user, screenWidth} = this.props;
+    const { messages, socket, channels, activeChannel, account, typers, dispatch, user, screenWidth} = this.props;
     //const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     const filteredMessages = messages;
-    const username = this.props.user.username;
     const styles = {
       right: {
         float:'right',
@@ -95,16 +98,21 @@ export default class Chat extends Component {
         lineHeight:'20px'
       }
     }
-    var title = "Bonjour "+username;
+    var title = null;
+    if (account == 'user') {
+      title = "Bonjour "+this.props.user.username+" !";
+    } else {
+      title = "Bonjour "+this.props.user.name+" !";
+    }
     var el = (
       <h1>Veuillez selectionner un element sur la gauche</h1>
     );
-    if (filteredMessages.length) {
+    if (activeChannel !== "0") {
       el = (
         <div className="main">
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
-              <MessageListItem message={message} key={message.id} />
+              <MessageListItem message={message} key={message.time+message.text} />
             )}
           </ul>
           <MessageComposer socket={socket} activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
@@ -123,37 +131,14 @@ export default class Chat extends Component {
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-              <MenuItem primaryText="Refresh" />
-              <MenuItem primaryText="Help" />
-              <MenuItem primaryText="Sign out" />
+              <MenuItem primaryText="Mon compte" />
+              <MenuItem primaryText="Déconnexion" />
             </IconMenu>
           }
         />
-        <LeftBar socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} />
+        <LeftBar account={account} socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} />
         <div id="sbottom" style={{width:'73%',height:'80vh',overflowY:'scroll',overflowX:'hidden'}}>
           {el}
-          <footer style={{fontSize: '1em', position: 'fixed', bottom: '0.2em', left: '21.5rem', color: '#000000', width: '100%', opacity: '0.5'}}>
-            {typers.length === 1 &&
-              <div>
-                <span>
-                  <TypingListItem username={typers[0]} key={1}/>
-                  <span> is typing</span>
-                </span>
-              </div>}
-            {typers.length === 2 &&
-            <div>
-              <span>
-                <TypingListItem username={typers[0]} key={1}/>
-                <span> and </span>
-                <TypingListItem username={typers[1]} key={2}/>
-                <span> are typing</span>
-              </span>
-            </div>}
-            {typers.length > 2 &&
-            <div>
-              <span>Several people are typing</span>
-            </div>}
-          </footer>
         </div>
       </div>
     );

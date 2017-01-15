@@ -67,9 +67,9 @@ class Register extends React.Component {
   }
 
   signUp() {
-    console.log("state:");
-    console.log(this.state);
-    this.props.dispatch(actions.signUp(this.state));
+    var sendData = this.state;
+    sendData.type = 0;
+    this.props.dispatch(actions.signUp(sendData));
   }
 
   render() {

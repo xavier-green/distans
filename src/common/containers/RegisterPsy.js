@@ -50,7 +50,9 @@ class Register extends React.Component {
     super(props);
     this.state = {
       psy: null,
-      region: null
+      region: null,
+      files: [],
+      bday: null
     }
   }
 
@@ -64,20 +66,26 @@ class Register extends React.Component {
     this.setState({psy: value})
   }
 
+  _dateChange(e, date) {
+    this.setState({bday: date})
+  }
+
   _regionChange(e, index, value) {
     this.setState({region: value})
   }
 
   signUp() {
+    var sendData = this.state;
+    sendData.type = 1;
     this.props.dispatch(actions.signUp(this.state));
   }
 
-  onDrop(acceptedFiles, rejectedFiles) {
-    var data = new FormData();
-    data.append('file', acceptedFiles[0]);
-    data.append('email','xav.green.95@gmail.com');
-    data.append('name','adeli')
-    this.props.dispatch(actions.putFile(data));
+  onDrop(str, acceptedFiles, rejectedFiles) {
+    if (acceptedFiles.length) {
+      var files = this.state.files;
+      files.push({name:str, file:acceptedFiles[0]})
+      this.setState({files})
+    }
   }
 
   render() {
@@ -135,13 +143,32 @@ class Register extends React.Component {
               </RadioButtonGroup><br />
               <div style={{display:'flex'}}>
                 <Dates color={blue500} style={styles.icon}/>
-                <DatePicker hintText="Date de naissance" mode="landscape"/>
+                <DatePicker value={this.state.bday} onChange={::this._dateChange} hintText="Date de naissance" mode="landscape"/>
               </div>
+              <SelectField
+                floatingLabelText="Choisissez une catégorie pour votre problème"
+                value={this.state.psy}
+                onChange={::this._selectChange}
+                style={{width:'70%'}}
+              >
+                {items}
+              </SelectField>
+              <SelectField
+                floatingLabelText="Choisissez votre région"
+                value={this.state.region}
+                onChange={::this._regionChange}
+                style={{width:'70%'}}
+              >
+                {regions}
+              </SelectField>
             </CardText>
-            <CardTitle title="Pièces à joindre" subtitle="Veuillez ajouter une photocopie de votre passeport et certificat ADELI pour finaliser l'inscription." />
+            <CardTitle title="Pièces à joindre" subtitle="Veuillez ajouter une photocopie de votre passeport / carte d'identité et certificat ADELI pour finaliser l'inscription." />
             <CardText>
-              <Dropzone onDrop={::this.onDrop}>
-                <div>Try dropping some files here, or click to select files to upload.</div>
+              <Dropzone onDrop={::this.onDrop.bind(this,'passeport')}>
+                <div>Passeport / CI</div>
+              </Dropzone>
+              <Dropzone onDrop={::this.onDrop.bind(this,'adeli')}>
+                <div>ADELI</div>
               </Dropzone>
             </CardText>
           </Card><br/><br/>

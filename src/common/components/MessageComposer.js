@@ -18,7 +18,7 @@ const styles = {
 export default class MessageComposer extends Component {
 
   static propTypes = {
-    activeChannel: PropTypes.number.isRequired,
+    activeChannel: PropTypes.string.isRequired,
     onSave: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     socket: PropTypes.object.isRequired
@@ -35,7 +35,6 @@ export default class MessageComposer extends Component {
     console.log(this.props);
     const text = this.state.text.trim();
     var newMessage = {
-      id: `${Date.now()}${uuid.v4()}`,
       channelId: this.props.activeChannel,
       text: text,
       time: moment.utc().format('lll')

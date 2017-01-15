@@ -1,6 +1,7 @@
 var Channel = require('../models/Channel');
 var bodyparser = require('body-parser');
 var User = require('../models/User.js');
+var Psy = require('../models/Psy.js');
 
 module.exports = function(router) {
   router.use(bodyparser.json());
@@ -19,15 +20,25 @@ module.exports = function(router) {
   });
 
   // this route returns all channels including private channels for that user
-  router.get('/channels/:username', function(req, res) {
-    console.log(req.params.username);
-    User.findOne({"local.username":req.params.username}, function(err, data) {
+  router.get('/channels/:email', function(req, res) {
+    Psy.findOne({email:req.params.email}, function(err, data) {
       if(err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
       }
       console.log(data);
-      res.json(data.contacts);
+      res.json(data.patients);
+    })
+  })
+
+  router.get('/psy/:username', function(req, res) {
+    console.log(req.params.username);
+    User.findOne({username:req.params.username}, function(err, data) {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+      res.json([data.psy]);
     })
   })
 

@@ -53,6 +53,18 @@ function receiveUser(username) {
   }
 }
 
+function receivePsy(email, name) {
+  const newPsy = {
+    email: email,
+    name: name,
+    id: Symbol(email)
+  }
+  return {
+    type: types.AUTH_SIGNUP_SUCCESS_PSY,
+    newPsy
+  }
+}
+
 function requestSignOut() {
   return {
     type: types.AUTH_SIGNOUT
@@ -80,18 +92,39 @@ export function signOut() {
 }
 
 export function signUp(user) {
-  console.log("got dispatch");
-  console.log(user);
+  var url = null;
+  if (user.type == 0) {
+    url = '/api/sign_up_user';
+  } else if (user.type == 1) {
+    url = '/api/sign_up_psy';
+  }
   return dispatch => {
     dispatch(requestSignUp())
-    return fetch('/api/sign_up', {
+    return fetch(url, {
       method: 'post',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
       })
       .then(response => {
-        if(response.ok) {
+        if(response.ok && (user.type == 1)) {
+          var data = new FormData();
+          data.append('file', user.files[0].file);
+          data.append('file', user.files[1].file);
+          data.append('filenames', user.files.map((el) => { return el.name}));
+          data.append('email', user.email);
+          return axios.post('/api/fileupload', data)
+          .then(json => {
+            console.log("File upload response");
+            console.log(json);
+            if (json.data.success) {
+              cookie.save('email', user.email)
+              dispatch(receivePsy(user.email,user.name));
+              browserHistory.push('/chat');
+            }
+          })
+          .catch(error => {throw error});
+        } else if (user.type == 0) {
           cookie.save('username', user.username)
           dispatch(receiveUser(user.username));
           browserHistory.push('/chat');
@@ -119,18 +152,30 @@ function receiveSignIn(username) {
 }
 
 export function signIn(user) {
+  var url = null;
+  if (user.type == "0") {
+    url = '/api/sign_in';
+  } else if (user.type == "1") {
+    url = '/api/sign_in_psy';
+  }
   return dispatch => {
     dispatch(requestSignIn())
-     return fetch('/api/sign_in', {
+     return fetch(url, {
       method: 'post',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
       })
       .then(response => {
+        console.log(response);
         if(response.ok) {
-          cookie.save('username', user.username)
-          dispatch(receiveSignIn(user.username));
+          if (user.type == "0") {
+            cookie.save('username', user.login)
+            dispatch(receiveUser(user.login));
+          } else if (user.type == "1") {
+            cookie.save('email', user.login)
+            dispatch(receivePsy(user.login,response.name));
+          }
           browserHistory.push('/chat');
         }
       })

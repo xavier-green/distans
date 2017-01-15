@@ -2,18 +2,15 @@ var bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 
 var UserSchema = mongoose.Schema({
-  id: Number,
-  local: {
-    username: { type: String, unique: true },
-    password: String,
-    email: String,
-  },
-  profile: mongoose.Schema.Types.Mixed,
-  type: Number, //0=utilisateur, 1=psychologue
-  contacts: [{
-    id: Number, //id of channel
-    name: String //name of psy associé
-  }]
+  username : { type: String, index: { unique: true}, required: true },
+  password : { type: String, required: true },
+  email : String,
+  sex : String,
+  psy_wanted :  mongoose.Schema.Types.Mixed,
+  psy : {
+    name : String,
+    _id : mongoose.Schema.Types.ObjectId
+  }
 });
 
 UserSchema.methods.generateHash = function(password) {
@@ -22,7 +19,7 @@ UserSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 UserSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 module.exports = mongoose.model('User', UserSchema);

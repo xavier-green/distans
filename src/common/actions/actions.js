@@ -6,13 +6,10 @@ var bluebird = require("bluebird");
 
 // NOTE:Chat actions
 
-export function start(initialChannel, user) {
-  console.log("Start parameters");
+export function start(user, account, socket) {
   return dispatch => {
     return bluebird.all([
-      // dispatch(changeChannel(initialChannel)),
-      // dispatch(fetchMessages(initialChannel)),
-      dispatch(fetchChannels(user))
+      dispatch(fetchChannels(user, account, socket))
     ])
   }
 }
@@ -76,12 +73,25 @@ export function welcomePage(username) {
   };
 }
 
-export function fetchChannels(user) {
+export function fetchChannels(user, account, socket) {
+  var url = null;
+  if (account == 'user') {
+    url = `/api/psy/${user.username}`;
+  } else if (account == 'psy') {
+    url = `/api/channels/${user.email}`;
+  }
   return dispatch => {
     dispatch(requestChannels())
-    return fetch(`/api/channels/${user}`)
+    return fetch(url)
       .then(response => response.json())
-      .then(json => dispatch(receiveChannels(json)))
+      .then(json => {
+        dispatch(receiveChannels(json));
+        if (account == 'user') {
+          dispatch(changeChannel(json[0]._id));
+          dispatch(fetchMessages(json[0]._id));
+          socket.emit('join channel', json[0]._id);
+        }
+      })
       .catch(error => {throw error});
   }
 }

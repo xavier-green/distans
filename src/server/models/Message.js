@@ -3,8 +3,7 @@
 var mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
-  id: String,
-  channelId: Number,
+  channelId: mongoose.Schema.Types.ObjectId,
   text: String,
   time: String
 });

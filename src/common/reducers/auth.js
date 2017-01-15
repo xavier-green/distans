@@ -11,6 +11,9 @@ import {
   AUTH_SIGNUP,
   AUTH_SIGNUP_SUCCESS,
   AUTH_SIGNUP_FAIL,
+  AUTH_SIGNUP_PSY,
+  AUTH_SIGNUP_SUCCESS_PSY,
+  AUTH_SIGNUP_FAIL_PSY,
   RECEIVE_SOCKET,
   RECEIVE_FILE
 } from '../constants/ActionTypes';
@@ -19,10 +22,12 @@ const initialState = {
   loaded: false,
   user: {
     username: null,
+    name: null,
+    email: null,
     id: null,
     socketID: null
   },
-  files: []
+  type: null
 };
 
 export default function auth(state = initialState, action = {}) {
@@ -83,7 +88,20 @@ export default function auth(state = initialState, action = {}) {
         username: action.newUser.name,
         id: action.newUser.id,
         socketID: null
-      }
+      },
+      type: 'user'
+    };
+  case AUTH_SIGNUP_SUCCESS_PSY:
+    return {
+      ...state,
+      signingUp: false,
+      user: {
+        email: action.newPsy.email,
+        name: action.newPsy.name,
+        id: action.newPsy.id,
+        socketID: null
+      },
+      type: 'psy'
     };
   case AUTH_SIGNUP_FAIL:
     return {
@@ -121,17 +139,6 @@ export default function auth(state = initialState, action = {}) {
         socketID: action.socketID
       }
     };
-  case RECEIVE_FILE:
-    if (action.success) {
-      return {
-        ...state,
-        file: [...state.files, action.type]
-      }
-    } else {
-      return {
-        ...state
-      }
-    }
   default:
     return state;
   }

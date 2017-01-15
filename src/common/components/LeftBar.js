@@ -24,7 +24,8 @@ export default class BarComponent extends Component {
     channels: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired,
     messages: PropTypes.array.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    account: PropTypes.string.isRequired
   };
   constructor(props){
     super(props);
@@ -37,10 +38,30 @@ export default class BarComponent extends Component {
     this.setState({toggled:toggle})
   }
   render () {
-    const { channels, messages } = this.props;
+    const { channels, messages, account } = this.props;
     const filteredChannels = channels.slice(0, 8);
     const moreChannelsBoolean = channels.length > 8;
     const restOfTheChannels = channels.slice(8);
+
+    var el = null;
+    if (account == 'psy') {
+      el = (
+        <div>
+          <Divider />
+          <List key="patients">
+            Patients
+            {filteredChannels.map(channel =>
+              <ChannelListItem
+                style={{paddingLeft: '0.8em', background: '#2E6DA4', height: '0.7em'}}
+                messageCount={messages.length}
+                channel={channel}
+                key={channel._id}
+                onClick={this.props.onClick} />
+            )}
+          </List>
+        </div>
+      )
+    }
 
     return  (
       <div>
@@ -77,18 +98,7 @@ export default class BarComponent extends Component {
             <ListItem primaryText="Notifications" leftCheckbox={<Checkbox />} />
             <ListItem primaryText="Son" leftCheckbox={<Checkbox />} />
           </List>
-          <Divider />
-          <List>
-            Patients
-            {filteredChannels.map(channel =>
-              <ChannelListItem
-                style={{paddingLeft: '0.8em', background: '#2E6DA4', height: '0.7em'}}
-                messageCount={messages.filter(msg => { return msg.channelId === channel.id; }).length}
-                channel={channel}
-                key={channel.id}
-                onClick={this.props.onClick} />
-            )}
-          </List>
+          {el}
           </CardText>
         </Card>
       </div>
