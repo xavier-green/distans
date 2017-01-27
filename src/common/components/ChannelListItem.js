@@ -10,7 +10,7 @@ const ChannelListItem = (props) => {
        style={{ cursor: 'hand', color: 'black'}}
        onClick={() => onClick(channel)}>
       <li style={{textAlign: 'left', cursor: 'pointer', marginLeft: '2em'}}>
-        <h5>{channel.name}</h5>
+        <h5>{channel.utilisateur.name}</h5>
       </li>
     </a>
     </ListItem>

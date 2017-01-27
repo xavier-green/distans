@@ -21,8 +21,6 @@ export function putFile(data) {
 }
 
 function receiveFile(json) {
-  console.log("File received");
-  console.log(json);
   return {
     type: types.RECEIVE_FILE,
     json
@@ -42,10 +40,10 @@ function requestSignUp() {
   }
 }
 
-function receiveUser(username) {
+function receiveUser(user) {
   const newUser = {
-    name: username,
-    id: Symbol(username)
+    name: user.username,
+    id: user._id
   }
   return {
     type: types.AUTH_SIGNUP_SUCCESS,
@@ -53,11 +51,11 @@ function receiveUser(username) {
   }
 }
 
-function receivePsy(email, name) {
+function receivePsy(psy) {
   const newPsy = {
-    email: email,
-    name: name,
-    id: Symbol(email)
+    email: psy.email,
+    name: psy.name,
+    id: psy._id
   }
   return {
     type: types.AUTH_SIGNUP_SUCCESS_PSY,
@@ -100,37 +98,33 @@ export function signUp(user) {
   }
   return dispatch => {
     dispatch(requestSignUp())
-    return fetch(url, {
-      method: 'post',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-      })
-      .then(response => {
-        if(response.ok && (user.type == 1)) {
-          var data = new FormData();
-          data.append('file', user.files[0].file);
-          data.append('file', user.files[1].file);
-          data.append('filenames', user.files.map((el) => { return el.name}));
-          data.append('email', user.email);
-          return axios.post('/api/fileupload', data)
-          .then(json => {
-            console.log("File upload response");
-            console.log(json);
-            if (json.data.success) {
-              cookie.save('email', user.email)
-              dispatch(receivePsy(user.email,user.name));
-              browserHistory.push('/chat');
-            }
-          })
-          .catch(error => {throw error});
-        } else if (user.type == 0) {
+    return axios
+    .post(url, user)
+    .then((response) => {
+      if((response.status == 200) && (user.type == 1)) {
+        var data = new FormData();
+        data.append('file', user.files[0].file);
+        data.append('file', user.files[1].file);
+        data.append('filenames', user.files.map((el) => { return el.name}));
+        data.append('email', user.email);
+        return axios.post('/api/fileupload', data)
+        .then(json => {
+          if (json.data.success) {
+            browserHistory.push('/unactive');
+          }
+        })
+        .catch(error => {throw error});
+      } else if ((response.status == 200) && (user.type == 0)) {
+        return axios.post('/api/channels/new_channel',response.data)
+        .then((doc) => {
           cookie.save('username', user.username)
-          dispatch(receiveUser(user.username));
+          dispatch(receiveUser(response.data));
           browserHistory.push('/chat');
-        }
-      })
-      .catch(error => {throw error});
+        })
+        .catch((err) => {throw err;})
+      }
+    })
+    .catch(error => {throw error});
   };
 }
 
@@ -160,26 +154,28 @@ export function signIn(user) {
   }
   return dispatch => {
     dispatch(requestSignIn())
-     return fetch(url, {
-      method: 'post',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-      })
-      .then(response => {
-        console.log(response);
-        if(response.ok) {
-          if (user.type == "0") {
-            cookie.save('username', user.login)
-            dispatch(receiveUser(user.login));
-          } else if (user.type == "1") {
-            cookie.save('email', user.login)
-            dispatch(receivePsy(user.login,response.name));
-          }
+    return axios
+    .post(url, user)
+    .then((response) => {
+      console.log("RESP");
+      console.log(response.data);
+      if(response.status == 200) {
+        if (user.type == "0") {
+          cookie.save('username', user.login)
+          dispatch(receiveUser(response.data));
           browserHistory.push('/chat');
+        } else if (user.type == "1") {
+          if (response.data.active) {
+            cookie.save('email', user.login)
+            dispatch(receivePsy(response.data));
+            browserHistory.push('/chat');
+          } else {
+            browserHistory.push('/unactive');
+          }
         }
-      })
-      .catch(error => {throw error});
+      }
+    })
+    .catch(error => {console.log(error);});
   };
 }
 

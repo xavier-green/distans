@@ -8,10 +8,8 @@ var PsySchema = mongoose.Schema({
   sex : { type: String, required: true },
   bday : { type: String, required: true },
   region : { type: String, required: true },
-  patients: [{
-    _id : mongoose.Schema.Types.ObjectId, //id of channel
-    name: String //name of patient associé
-  }]
+  patients: { type: Number, default:0 },
+  active: { type:Boolean, default: false}
 });
 
 PsySchema.methods.generateHash = function(password) {

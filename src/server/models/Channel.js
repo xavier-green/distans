@@ -3,14 +3,16 @@
 var mongoose = require('mongoose');
 
 var channelSchema = mongoose.Schema({
+  msg_count: { type:Number, default: 0},
   psychologue: {
     name: String,
-    id: mongoose.Schema.Types.ObjectId
+    id: String
   },
   utilisateur: {
     name: String,
-    id: mongoose.Schema.Types.ObjectId
-  }
+    id: String
+  },
+  active: {type: Boolean, default: true}
 });
 
 module.exports = mongoose.model('Channel', channelSchema);

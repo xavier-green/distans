@@ -11,13 +11,19 @@ const initialChannel = "123"; // NOTE: I hard coded this value for my example.  
 
 class ChatContainer extends Component {
   componentWillMount() {
-    const { dispatch, user, account } = this.props;
-    if(!user.username) {
-      dispatch(receiveAuth());
+    const { dispatch, user, account, history } = this.props;
+    if(!user.id) {
+      history.replace('/signin')
+    } else {
+      dispatch(actions.start(user, account, socket));
     }
-    dispatch(actions.start(user, account, socket));
   }
   render() {
+    if (this.props.user.id == null) {
+      return (
+        <p>Chargement...</p>
+      )
+    }
     return (
       <Chat {...this.props} socket={socket} />
     );

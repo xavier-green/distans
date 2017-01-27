@@ -6,11 +6,7 @@ var UserSchema = mongoose.Schema({
   password : { type: String, required: true },
   email : String,
   sex : String,
-  psy_wanted :  mongoose.Schema.Types.Mixed,
-  psy : {
-    name : String,
-    _id : mongoose.Schema.Types.ObjectId
-  }
+  psy_wanted :  mongoose.Schema.Types.Mixed
 });
 
 UserSchema.methods.generateHash = function(password) {

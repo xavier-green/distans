@@ -76,9 +76,9 @@ export function welcomePage(username) {
 export function fetchChannels(user, account, socket) {
   var url = null;
   if (account == 'user') {
-    url = `/api/psy/${user.username}`;
+    url = `/api/channels/user/${user.id}`;
   } else if (account == 'psy') {
-    url = `/api/channels/${user.email}`;
+    url = `/api/channels/psy/${user.id}`;
   }
   return dispatch => {
     dispatch(requestChannels())

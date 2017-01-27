@@ -30,9 +30,9 @@ export default class Chat extends Component {
       targetedUser: ''
     }
   }
+
   componentDidMount() {
     const { socket, user, dispatch, activeChannel } = this.props;
-    console.log(this.props);
     socket.emit('chat mounted', user);
     // socket.emit('join channel', 123);
     socket.on('new bc message', msg =>
