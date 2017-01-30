@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import * as actions from '../actions/actions';
 import {receiveAuth} from '../actions/authActions';
 import Chat from '../components/Chat';
+import UserProfile from '../components/UserProfile';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
@@ -13,7 +14,7 @@ class ChatContainer extends Component {
   componentWillMount() {
     const { dispatch, user, account, history } = this.props;
     if(!user.id) {
-      history.replace('/signin')
+      history.replace('/login')
     } else {
       dispatch(actions.start(user, account, socket));
     }
@@ -24,8 +25,14 @@ class ChatContainer extends Component {
         <p>Chargement...</p>
       )
     }
+    var element = (<p>Chargement...</p>);
+    if (this.props.route.path == "/chat") {
+      element = (<Chat {...this.props} socket={socket} />);
+    } else if (this.props.route.path == "/edit") {
+      element = (<UserProfile {...this.props} socket={socket} />)
+    }
     return (
-      <Chat {...this.props} socket={socket} />
+      element
     );
   }
 }

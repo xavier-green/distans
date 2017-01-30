@@ -8,7 +8,8 @@ import IconButton from 'material-ui/lib/icon-button';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import AppBar from 'material-ui/lib/app-bar';
-import LeftBar from './LeftBar';
+import LeftBarUser from './LeftBarUtilisateur';
+import LeftBarPsy from './LeftBarPsy';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
 export default class Chat extends Component {
@@ -70,6 +71,11 @@ export default class Chat extends Component {
     const { dispatch } = this.props;
     dispatch(authActions.signOut());
   }
+  myAccount() {
+    console.log(this.props);
+    console.log(this.props.history);
+    this.props.history.push('/edit');
+  }
   changeActiveChannel(channel) {
     const { socket, activeChannel, dispatch } = this.props;
     socket.emit('leave channel', activeChannel);
@@ -78,26 +84,9 @@ export default class Chat extends Component {
     dispatch(actions.fetchMessages(channel._id));
   }
   render() {
-    const { messages, socket, channels, activeChannel, account, typers, dispatch, user, screenWidth} = this.props;
+    const { messages, socket, channels, activeChannel, account, typers, dispatch, user, screenWidth, history} = this.props;
     //const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     const filteredMessages = messages;
-    const styles = {
-      right: {
-        float:'right',
-        paddingRight:'15px',
-        background: '#01d999',
-        textAlign: 'right',
-        color:'white',
-        lineHeight:'20px'
-      },
-      left: {
-        background: '#0199d9',
-        float:'left',
-        textAlign: 'left',
-        color:'white',
-        lineHeight:'20px'
-      }
-    }
     var title = null;
     if (account == 'user') {
       title = "Bonjour "+this.props.user.username+" !";
@@ -112,10 +101,10 @@ export default class Chat extends Component {
         <div className="main">
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
-              <MessageListItem message={message} key={message.time+message.text} />
+              <MessageListItem account={account} message={message} key={message.time+message.text} />
             )}
           </ul>
-          <MessageComposer socket={socket} activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
+          <MessageComposer account={account} socket={socket} activeChannel={activeChannel} user={user} onSave={::this.handleSave} />
         </div>
       )
     }
@@ -131,12 +120,16 @@ export default class Chat extends Component {
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-              <MenuItem primaryText="Mon compte" />
-              <MenuItem primaryText="Déconnexion" />
+              <MenuItem onClick={::this.myAccount} primaryText="Mon compte" />
+              <MenuItem onClick={::this.handleSignOut} primaryText="Déconnexion" />
             </IconMenu>
           }
         />
-        <LeftBar account={account} socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} />
+        {
+          account == 'psy' ?
+          <LeftBarPsy history={history} socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} /> :
+          <LeftBarUser history={history} socket={socket} messages={messages} dispatch={dispatch} />
+        }
         <div id="sbottom" style={{width:'73%',height:'80vh',overflowY:'scroll',overflowX:'hidden'}}>
           {el}
         </div>

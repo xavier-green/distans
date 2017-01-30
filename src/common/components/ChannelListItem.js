@@ -5,15 +5,13 @@ import ListItem from 'material-ui/lib/lists/list-item';
 const ChannelListItem = (props) => {
   const { channel: selectedChannel, onClick, channel } = props;
   return (
-    <ListItem>
     <a className={classnames({ selected: channel === selectedChannel })}
-       style={{ cursor: 'hand', color: 'black'}}
+       style={{ cursor: 'pointer', color: 'black'}}
        onClick={() => onClick(channel)}>
-      <li style={{textAlign: 'left', cursor: 'pointer', marginLeft: '2em'}}>
+       <ListItem>
         <h5>{channel.utilisateur.name}</h5>
-      </li>
+        </ListItem>
     </a>
-    </ListItem>
   );
 }
 

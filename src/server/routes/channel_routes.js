@@ -47,7 +47,10 @@ module.exports = function(router) {
   })
 
   function getRegion(region) {
-    return Psy.find({}).sort({patients:1}).exec()
+    region.active = true;
+    console.log("'Region' request:");
+    console.log(region);
+    return Psy.find(region).sort({patients:1}).exec()
     .then((docs) => {
       console.log("psies in region:");
       console.log(docs);
@@ -83,7 +86,7 @@ module.exports = function(router) {
       name: data.username,
       id: data._id
     };
-    var region = data.psy_wanted.region || "/ /";
+    var region = {region: data.psy_wanted.region} || {};
     console.log("region: "+region);
     return getRegion(region)
     .then((docs) => {

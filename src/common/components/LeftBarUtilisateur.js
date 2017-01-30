@@ -21,11 +21,8 @@ import ChannelListItem from './ChannelListItem';
 export default class BarComponent extends Component {
 
   static propTypes = {
-    channels: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired,
     messages: PropTypes.array.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    account: PropTypes.string.isRequired
+    dispatch: PropTypes.func.isRequired
   };
   constructor(props){
     super(props);
@@ -37,31 +34,11 @@ export default class BarComponent extends Component {
   handleToggle(event,toggle) {
     this.setState({toggled:toggle})
   }
+  myAccount() {
+    this.props.history.pushState('/edit');
+  }
   render () {
-    const { channels, messages, account } = this.props;
-    const filteredChannels = channels.slice(0, 8);
-    const moreChannelsBoolean = channels.length > 8;
-    const restOfTheChannels = channels.slice(8);
-
-    var el = null;
-    if (account == 'psy') {
-      el = (
-        <div>
-          <Divider />
-          <List key="patients">
-            Patients
-            {filteredChannels.map(channel =>
-              <ChannelListItem
-                style={{paddingLeft: '0.8em', background: '#2E6DA4', height: '0.7em'}}
-                messageCount={messages.length}
-                channel={channel}
-                key={channel._id}
-                onClick={this.props.onClick} />
-            )}
-          </List>
-        </div>
-      )
-    }
+    const { messages } = this.props;
 
     return  (
       <div>
@@ -82,10 +59,7 @@ export default class BarComponent extends Component {
             <ListItem
               primaryText="Profil"
               secondaryText="Accède ici à tous tes paramètres"
-            />
-            <ListItem
-              primaryText="Sessions"
-              secondaryText="Recherche et filtre tes dialogues"
+              onClick={::this.myAccount}
             />
             <ListItem
               primaryText="Paiement"
@@ -98,7 +72,6 @@ export default class BarComponent extends Component {
             <ListItem primaryText="Notifications" leftCheckbox={<Checkbox />} />
             <ListItem primaryText="Son" leftCheckbox={<Checkbox />} />
           </List>
-          {el}
           </CardText>
         </Card>
       </div>

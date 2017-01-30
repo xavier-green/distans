@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
+moment.locale('fr');
 import uuid from 'node-uuid';
 import TextField from 'material-ui/lib/text-field';
 import FlatButton from 'material-ui/lib/flat-button'
@@ -31,15 +32,18 @@ export default class MessageComposer extends Component {
     };
   }
   handleSubmit(event) {
-    const { user, socket, activeChannel} = this.props;
-    console.log(this.props);
+    const { user, socket, activeChannel, account} = this.props;
     const text = this.state.text.trim();
     var newMessage = {
       channelId: this.props.activeChannel,
       text: text,
-      time: moment.utc().format('lll')
+      time: moment().format('lll')
     };
-    console.log("emitting socket");
+    if (account == 'psy') {
+      newMessage.fromPsy = true;
+    } else {
+      newMessage.fromPsy = false;
+    }
     socket.emit('new message', newMessage);
     socket.emit('stop typing', { user: user.username, channel: activeChannel });
     this.props.onSave(newMessage);
