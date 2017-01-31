@@ -12,7 +12,9 @@ const styles = {
     width: '133.333%',
     paddingLeft: '30px',
     height: '50px',
-    left: '25.4%'
+    left: '25%',
+    backgroundColor:'#f5f1ee',
+    borderLeft:'1px solid grey'
   }
 }
 

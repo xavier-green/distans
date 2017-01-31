@@ -42,7 +42,7 @@ export default class BarComponent extends Component {
 
     return  (
       <div>
-        <Card style={{width:'25%',float:'left',height:'90vh',marginRight:'15px'}}>
+        <Card style={{width:'25%',float:'left',height:'90.5vh',marginRight:'15px'}}>
           <CardText>
             <List>
               Privacy

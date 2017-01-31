@@ -12,23 +12,28 @@ export default class MessageListItem extends React.Component {
       backgroundColor:'rgba(220, 248, 198, 0.86)'
     };
     var listyle = {
-      width:'70%',
-      marginBottom:'10px'
+      maxWidth:'70%',
+      marginBottom:'10px',
+      display: 'inline-block',
+      paddingRight: '15px'
     }
     if (account == 'psy') {
       if (!message.fromPsy) {
         listyle.textAlign = 'right';
         listyle.paddingLeft = '30%';
-        styles.backgroundColor = 'rgba(173, 216, 230, 0.32)';
+        listyle.float = 'right';
+        styles.backgroundColor = 'white';
       }
     } else {
       if (message.fromPsy) {
         listyle.textAlign = 'right';
+        listyle.float = 'right';
         listyle.paddingLeft = '30%';
-        styles.backgroundColor = 'rgba(173, 216, 230, 0.32)';
+        styles.backgroundColor = 'white';
       }
     }
     return (
+      <div>
       <li key={message._id} style={listyle}>
         <div style={styles}>
           <span>
@@ -36,7 +41,8 @@ export default class MessageListItem extends React.Component {
           </span>
           <div style={{clear: 'both', paddingTop: '0.1em', marginTop: '-1px', paddingBottom: '0.3em'}}>{message.text}</div>
         </div>
-      </li>
+      </li><br/>
+      </div>
     );
   }
 }

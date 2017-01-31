@@ -130,7 +130,7 @@ export default class Chat extends Component {
           <LeftBarPsy history={history} socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} /> :
           <LeftBarUser history={history} socket={socket} messages={messages} dispatch={dispatch} />
         }
-        <div id="sbottom" style={{width:'73%',height:'80vh',overflowY:'scroll',overflowX:'hidden'}}>
+        <div id="sbottom" style={{height:'85vh',overflowY:'scroll',overflowX:'hidden'}}>
           {el}
         </div>
       </div>

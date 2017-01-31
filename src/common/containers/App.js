@@ -17,13 +17,13 @@ class App extends React.Component {
     const {screenHeight, isMobile, screenWidth} = this.props.environment;
     if (isMobile) {
       return (
-        <div style={{height: `${screenHeight}px`, width: `${screenWidth}px`}}>
+        <div style={{height: `${screenHeight}px`, width: `${screenWidth}px`, backgroundColor:'lightblue'}}>
           {this.props.children}
         </div>
       );
     }
     return (
-      <div style={{height: '100%'}} >
+      <div style={{height: '100%', backgroundColor:'lightblue'}} >
         {this.props.children}
       </div>
     );
