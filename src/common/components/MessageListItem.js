@@ -1,11 +1,17 @@
 import React, { PropTypes } from 'react';
+import Avatar from 'react-avatar';
 
 export default class MessageListItem extends React.Component {
   static propTypes = {
     message: PropTypes.object.isRequired
   };
   render() {
+    var avatar = null;
     const { message, account } = this.props;
+    var time = {
+      fontSize: "0.7rem",
+      color: "#ccc"
+    };
     var styles = {
       borderRadius:'10px',
       padding:'5px',
@@ -14,34 +20,45 @@ export default class MessageListItem extends React.Component {
     var listyle = {
       maxWidth:'70%',
       marginBottom:'10px',
-      display: 'inline-block',
-      paddingRight: '15px'
+      display: 'inline-block'
     }
+    var avatarFirst = true;
     if (account == 'psy') {
       if (!message.fromPsy) {
+        avatar = (<Avatar name={this.props.patient} round={true} size={30} style={{float:"right",paddingRight:'15px'}} />);
         listyle.textAlign = 'right';
-        listyle.paddingLeft = '30%';
         listyle.float = 'right';
         styles.backgroundColor = 'white';
+        avatarFirst = false;
+      } else {
+        avatar = (<Avatar name={this.props.name} round={true} style={{float:"left"}} size={30} />);
       }
     } else {
       if (message.fromPsy) {
+        avatar = (<Avatar value="Psy" round={true} size={30} style={{float:"right",paddingRight:'15px'}} />);
         listyle.textAlign = 'right';
         listyle.float = 'right';
-        listyle.paddingLeft = '30%';
         styles.backgroundColor = 'white';
+        avatarFirst = false;
+      } else {
+        avatar = (<Avatar name={this.props.name} round={true} style={{float:"left"}} size={30} />);
       }
     }
-    return (
-      <div>
-      <li key={message._id} style={listyle}>
+    var listItem = (
+    <li key={message._id} style={listyle}>
         <div style={styles}>
-          <span>
+          <div style={{clear: 'both', paddingTop: '0.1em', marginTop: '-1px', paddingBottom: '0.3em'}}>{message.text}</div>
+          <span style={time}>
             <i style={{color: '#aad', opacity: '0.8'}}>{message.time}</i>
           </span>
-          <div style={{clear: 'both', paddingTop: '0.1em', marginTop: '-1px', paddingBottom: '0.3em'}}>{message.text}</div>
         </div>
-      </li><br/>
+      </li>
+    );
+    var oderLeft = (<div>{avatar}{listItem}</div>);
+    return (
+      <div style={{display:'inline-block',width:'100%'}}>
+      {oderLeft}
+      <br/>
       </div>
     );
   }

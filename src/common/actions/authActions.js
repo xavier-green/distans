@@ -157,8 +157,6 @@ export function signIn(user) {
     return axios
     .post(url, user)
     .then((response) => {
-      console.log("RESP");
-      console.log(response.data);
       if(response.status == 200) {
         if (user.type == "0") {
           cookie.save('username', user.login)

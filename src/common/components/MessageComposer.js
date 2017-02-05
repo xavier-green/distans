@@ -73,6 +73,7 @@ export default class MessageComposer extends Component {
           hintText="Écrivez ici le message à envoyer"
           value={this.state.text}
           onChange={::this.handleChange}
+          onEnterKeyDown={::this.handleSubmit}
           style={{width:'40%'}}
         />
         <FlatButton label="Écrivez" primary={true} onClick={::this.handleSubmit} />

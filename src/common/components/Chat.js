@@ -28,7 +28,7 @@ export default class Chat extends Component {
     super(props, context);
     this.state = {
       privateChannelModal: false,
-      targetedUser: ''
+      currentPatient: null
     }
   }
 
@@ -56,8 +56,6 @@ export default class Chat extends Component {
     );
   }
   componentDidUpdate() {
-    console.log("Update");
-    console.log(this.props);
     var objDiv = document.getElementById("sbottom");
     objDiv.scrollTop = objDiv.scrollHeight;
   }
@@ -72,26 +70,28 @@ export default class Chat extends Component {
     dispatch(authActions.signOut());
   }
   myAccount() {
-    console.log(this.props);
-    console.log(this.props.history);
     this.props.history.push('/edit');
   }
   changeActiveChannel(channel) {
     const { socket, activeChannel, dispatch } = this.props;
+    this.currentPatient = channel.utilisateur.name;
     socket.emit('leave channel', activeChannel);
     socket.emit('join channel', channel._id);
     dispatch(actions.changeChannel(channel._id));
     dispatch(actions.fetchMessages(channel._id));
   }
   render() {
-    const { messages, socket, channels, activeChannel, account, typers, dispatch, user, screenWidth, history} = this.props;
+    const { messages, socket, channels, activeChannel, account, typers, dispatch, user, screenWidth, history, currentPatient } = this.props;
     //const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     const filteredMessages = messages;
     var title = null;
+    var name = null;
     if (account == 'user') {
-      title = "Bonjour "+this.props.user.username+" !";
+      name = this.props.user.username;
+      title = "Bonjour "+name+" !";
     } else {
-      title = "Bonjour "+this.props.user.name+" !";
+      name = this.props.user.name;
+      title = "Bonjour "+name+" !";
     }
     var el = (
       <h1>Veuillez selectionner un element sur la gauche</h1>
@@ -101,7 +101,7 @@ export default class Chat extends Component {
         <div className="main">
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
-              <MessageListItem account={account} message={message} key={message.time+message.text} />
+              <MessageListItem patient={currentPatient} name={name} account={account} message={message} key={message.time+message.text} />
             )}
           </ul>
           <MessageComposer account={account} socket={socket} activeChannel={activeChannel} user={user} onSave={::this.handleSave} />

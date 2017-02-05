@@ -22,7 +22,6 @@ function addMessage(message) {
 }
 
 export function receiveRawMessage(message) {
-  console.log("front receiving message");
   return {
     type: types.RECEIVE_MESSAGE,
     message
@@ -127,8 +126,6 @@ export function fetchMessages(channelId) {
 
 function receiveMessages(json, channelId) {
   const date = moment().format('lll');
-  console.log("Messages");
-  console.log(json);
   return {
     type: types.LOAD_MESSAGES_SUCCESS,
     json,

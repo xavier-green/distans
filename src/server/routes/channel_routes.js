@@ -86,7 +86,10 @@ module.exports = function(router) {
       name: data.username,
       id: data._id
     };
-    var region = {region: data.psy_wanted.region} || {};
+    var region = {};
+    if (data.psy_wanted.region && (data.psy_wanted.region !== null)) {
+      region = {region: data.psy_wanted.region}
+    }
     console.log("region: "+region);
     return getRegion(region)
     .then((docs) => {
