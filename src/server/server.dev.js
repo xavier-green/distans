@@ -97,7 +97,7 @@ app.get('/*', function(req, res) {
   })
 })
 
-const server = app.listen(process.env.PORT, 'localhost', function(err) {
+const server = app.listen(process.env.PORT, function(err) {
   if (err) {
     console.log(err);
     return;
