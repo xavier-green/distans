@@ -23,8 +23,7 @@ export default class BarComponent extends Component {
     channels: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired,
     messages: PropTypes.array.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    account: PropTypes.string.isRequired
+    dispatch: PropTypes.func.isRequired
   };
   constructor(props){
     super(props);
@@ -64,16 +63,16 @@ export default class BarComponent extends Component {
             <ListItem
               primaryText="Profil"
               secondaryText="Accède ici à tous vos paramètres"
-              onClick={::this.myAccount}
-            />
-            <ListItem
-              primaryText="Sessions"
-              secondaryText="Recherche et filtrez les dialogues"
+              onClick={this.props.myAccount}
             />
             <ListItem
               primaryText="Facturation"
               secondaryText="Gèrez votre abonnement et codes d'accès"
-              onClick={this.props.onClick}
+            />
+            <ListItem
+              primaryText="Contact"
+              secondaryText="Contactez nous ou prenez RDV"
+              onClick={this.props.gotoContact}
             />
           </List>
           <Divider />

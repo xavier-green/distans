@@ -2,6 +2,7 @@ import * as types from '../constants/ActionTypes';
 import { browserHistory } from 'react-router';
 import fetch from 'isomorphic-fetch';
 import moment from 'moment';
+import axios from 'axios';
 var bluebird = require("bluebird");
 
 // NOTE:Chat actions
@@ -11,6 +12,14 @@ export function start(user, account, socket) {
     return bluebird.all([
       dispatch(fetchChannels(user, account, socket))
     ])
+  }
+}
+
+export function newError(error) {
+  console.log('new error action');
+  return {
+    type: 'NEW_ERROR',
+    error: error
   }
 }
 
@@ -176,15 +185,19 @@ export function usernameValidationList() {
   }
 }
 
-export function createMessage(message) {
+export function createMessage(message, socket) {
   return dispatch => {
     dispatch(addMessage(message))
-    return fetch('/api/newmessage', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(message)})
+    return axios.post('/api/newmessage', message)
+    .then((resp)=>{
+        if (resp.data.msgAccepted) {
+          console.log("Okay, sending msg");
+          socket.emit('new message', message);
+        } else {
+          console.log("Error, limit reached");
+          dispatch(newError('Vous avez atteint la limite de messages que vous pouvez envoyer !'))
+        }
+      })
       .catch(error => {throw error});
   }
 }

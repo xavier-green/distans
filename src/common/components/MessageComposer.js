@@ -46,8 +46,8 @@ export default class MessageComposer extends Component {
     } else {
       newMessage.fromPsy = false;
     }
-    socket.emit('new message', newMessage);
-    socket.emit('stop typing', { user: user.username, channel: activeChannel });
+    // socket.emit('new message', newMessage);
+    // socket.emit('stop typing', { user: user.username, channel: activeChannel });
     this.props.onSave(newMessage);
     this.setState({ text: '', typing: false });
   }

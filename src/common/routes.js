@@ -21,6 +21,7 @@ const Routes = (
     <Route path="/unactive" component={Unactive}/>
     <Route path="/chat" component={ChatContainer}/>
     <Route path="/edit" component={ChatContainer}/>
+    <Route path="/contact" component={ChatContainer}/>
     <Route path="/register/psy" component={RegisterPsy}/>
     <Route path="/register/utilisateur" component={RegisterUser}/>
   </Route>

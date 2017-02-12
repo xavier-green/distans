@@ -16,7 +16,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import EditUser from './edit/EditUser';
-import EditPsy from './edit/EditUser';
+import EditPsy from './edit/EditPsy';
+
+import Contact from './Contact';
 
 export default class EditProfile extends Component {
 
@@ -38,8 +40,18 @@ export default class EditProfile extends Component {
 
   componentDidMount() {
     const { user } = this.props;
-    console.log("Edit");
-    console.log(this.props);
+  }
+
+  myAccount() {
+    console.log("gotoedit");
+    this.props.history.push('/edit');
+  }
+  gotoChat() {
+    this.props.history.push('/chat');
+  }
+  gotoContact() {
+    console.log("gotocontact");
+    this.props.history.push('/contact');
   }
 
   handleSignOut() {
@@ -52,9 +64,21 @@ export default class EditProfile extends Component {
     socket.emit('join channel', channel._id);
     dispatch(actions.changeChannel(channel._id));
     dispatch(actions.fetchMessages(channel._id));
+    this.gotoChat();
   }
   render() {
     const { messages, socket, channels, account, dispatch, user } = this.props;
+
+    var element = null;
+    if (this.props.app == 'edit') {
+      if (account == 'psy') {
+        element = (<EditPsy user={user} dispatch={dispatch} />);
+      } else {
+        element = (<EditUser user={user} dispatch={dispatch} />);
+      }
+    } else if (this.props.app == 'contact') {
+      element = (<Contact user={user} dispatch={dispatch} />);
+    }
 
     return (
       <div>
@@ -75,15 +99,11 @@ export default class EditProfile extends Component {
         />
         {
           account == 'psy' ?
-          <LeftBarPsy socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} /> :
-          <LeftBarUser socket={socket} messages={messages} dispatch={dispatch} />
+          <LeftBarPsy gotoContact={::this.gotoContact} gotoChat={::this.gotoChat} myAccount={::this.myAccount} socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} /> :
+          <LeftBarUser gotoContact={::this.gotoContact} gotoChat={::this.gotoChat} myAccount={::this.myAccount} socket={socket} messages={messages} dispatch={dispatch} />
         }
         <div id="sbottom" style={{width:'73%',height:'80vh',overflowY:'scroll',overflowX:'hidden'}}>
-        {
-          account == 'psy' ?
-          <EditPsy user={user} dispatch={dispatch} /> :
-          <EditUser user={user} dispatch={dispatch} />
-        }
+        {element}
         </div>
       </div>
     );

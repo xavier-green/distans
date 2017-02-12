@@ -1,4 +1,5 @@
 var Message = require('../models/Message');
+var Channel = require('../models/Channel');
 var bodyparser = require('body-parser');
 
 module.exports = function(router) {
@@ -36,12 +37,33 @@ module.exports = function(router) {
     var channelId = copy.channelId;
     copy.channelId = new ObjectId(channelId);
     var newMessage = new Message(copy);
-    newMessage.save(function (err, data) {
-      if(err) {
-        console.log(err);
-        return res.status(500).json({msg: 'internal server error'});
+
+    Channel.findOne({_id:copy.channelId})
+    .then((channel)=>{
+      console.log("Updating channel count");
+      if (!copy.fromPsy) {
+        channel.msg_count += 1;
       }
-      res.json(data);
-    });
+      channel.save()
+      .then(()=>{
+        console.log("All saved, count: "+channel.msg_count);
+        console.log(copy.fromPsy);
+        var msgAccepted = false;
+        if (channel.msg_count<7 || copy.fromPsy) {
+          msgAccepted = true;
+          newMessage.save()
+          .then((msg) => {
+            console.log("Got newmessage:");
+            console.log(msg);
+            res.status(200).json({msgAccepted:msgAccepted});
+          })
+        } else {
+          res.status(200).json({msgAccepted:msgAccepted});
+        }
+      })
+    })
+    .catch((err) => {
+      res.status(500).json(err)
+    })
   });
 }

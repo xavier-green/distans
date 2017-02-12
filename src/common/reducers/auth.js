@@ -27,7 +27,7 @@ const initialState = {
     id: null,
     socketID: null
   },
-  type: null
+  account: null
 };
 
 export default function auth(state = initialState, action = {}) {
@@ -89,7 +89,7 @@ export default function auth(state = initialState, action = {}) {
         id: action.newUser.id,
         socketID: null
       },
-      type: 'user'
+      account: 'user'
     };
   case AUTH_SIGNUP_SUCCESS_PSY:
     return {
@@ -101,7 +101,7 @@ export default function auth(state = initialState, action = {}) {
         id: action.newPsy.id,
         socketID: null
       },
-      type: 'psy'
+      account: 'psy'
     };
   case AUTH_SIGNUP_FAIL:
     return {

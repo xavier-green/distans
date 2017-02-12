@@ -29,7 +29,9 @@ class ChatContainer extends Component {
     if (this.props.route.path == "/chat") {
       element = (<Chat {...this.props} socket={socket} />);
     } else if (this.props.route.path == "/edit") {
-      element = (<UserProfile {...this.props} socket={socket} />)
+      element = (<UserProfile {...this.props} socket={socket} app='edit' />)
+    } else if (this.props.route.path == "/contact") {
+      element = (<UserProfile {...this.props} socket={socket} app='contact' />)
     }
     return (
       element
@@ -38,6 +40,7 @@ class ChatContainer extends Component {
 }
 ChatContainer.propTypes = {
   messages: PropTypes.array.isRequired,
+  errors: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   channels: PropTypes.array.isRequired,
@@ -49,10 +52,11 @@ ChatContainer.propTypes = {
 function mapStateToProps(state) {
   return {
       messages: state.messages.data,
+      errors: state.errors.errors,
       channels: state.channels.data,
       activeChannel: state.activeChannel.id,
       user: state.auth.user,
-      account: state.auth.type,
+      account: state.auth.account,
       typers: state.typers,
       screenWidth: state.environment.screenWidth
   }

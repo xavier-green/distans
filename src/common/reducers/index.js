@@ -1,6 +1,7 @@
 import messages from './messages';
 import channels from './channels';
 import activeChannel from './activeChannel';
+import errors from './errors';
 import auth from './auth';
 import typers from './typers';
 import welcomePage from './welcomePage';
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   welcomePage,
   userValidation,
   environment,
-  formReducer
+  formReducer,
+  errors
 });
 
 export default rootReducer;

@@ -34,9 +34,6 @@ export default class BarComponent extends Component {
   handleToggle(event,toggle) {
     this.setState({toggled:toggle})
   }
-  myAccount() {
-    this.props.history.pushState('/edit');
-  }
   render () {
     const { messages } = this.props;
 
@@ -57,13 +54,21 @@ export default class BarComponent extends Component {
             <List>
             General
             <ListItem
-              primaryText="Profil"
-              secondaryText="Accède ici à tous tes paramètres"
-              onClick={::this.myAccount}
+              primaryText="Chat"
+              key='chat'
+              secondaryText="Venez parler avec votre psychologue"
+              onClick={this.props.gotoChat}
             />
             <ListItem
-              primaryText="Paiement"
-              secondaryText="Gère ton abonnement et codes d'accès"
+              primaryText="Profil"
+              key='profil'
+              secondaryText="Accèdez ici à tous vos paramètres"
+              onClick={this.props.myAccount}
+            />
+            <ListItem
+              primaryText="Contact"
+              secondaryText="Contactez nous ou prenez RDV"
+              onClick={this.props.gotoContact}
             />
           </List>
           <Divider />
