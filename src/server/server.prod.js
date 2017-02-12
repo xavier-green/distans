@@ -12,7 +12,7 @@ import React from 'react';
 import configureStore from '../common/store/configureStore'
 import { RouterContext, match } from 'react-router';
 import routes from '../common/routes';
-import { createLocation } from 'history';
+import { createMemoryHistory } from 'history';
 import cors from 'cors';
 
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
@@ -54,7 +54,10 @@ app.use('/', express.static(path.join(__dirname, '../..', 'static')));
 
 app.get('/*', function(req, res) {
 
-  const location = createLocation(req.url)
+  const history = createMemoryHistory();
+  const location = history.createLocation({
+    pathname: req.url
+  })
 
   match({ routes, location }, (err, redirectLocation, renderProps) => {
 

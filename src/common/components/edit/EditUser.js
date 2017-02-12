@@ -11,7 +11,7 @@ export default class EditUser extends React.Component {
   render() {
 
     return (
-      <Card>
+      <Card style={{marginTop:'25px'}}>
         <CardTitle title="Clickez pour modifier l'information que vous souhaitez" subtitle="N'oubliez pas de sauvegarder avant de quitter !" />
         <CardText>
           <TextField
