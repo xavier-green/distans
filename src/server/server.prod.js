@@ -2,7 +2,6 @@
 
 import express from 'express';
 import path from 'path';
-var session = require('express-session');
 
 import mongoose from 'mongoose';
 
@@ -48,7 +47,6 @@ require('./routes/user_routes')(usersRouter, passport);
 app.use('/api', messageRouter);
 app.use('/api', usersRouter);
 app.use('/api', channelRouter);
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
 
 app.use('/', express.static(path.join(__dirname, '../..', 'static')));
 
