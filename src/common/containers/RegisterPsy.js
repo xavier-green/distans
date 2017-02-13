@@ -25,6 +25,8 @@ import Stepper from 'react-stepper-horizontal';
 import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 
+var moment = require('moment');
+
 var Dropzone = require('react-dropzone');
 
 import { connect } from 'react-redux';
@@ -228,7 +230,7 @@ class Register extends React.Component {
   }
 
   _dateChange(e, date) {
-    this.setState({bday: date})
+    this.setState({bday: moment.parseZone(date).format("DD/MM/YYYY")})
   }
 
   _regionChange(e, index, value) {

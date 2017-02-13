@@ -25,7 +25,8 @@ const initialState = {
     name: null,
     email: null,
     id: null,
-    socketID: null
+    socketID: null,
+    userObject: null
   },
   account: null
 };
@@ -87,7 +88,8 @@ export default function auth(state = initialState, action = {}) {
       user: {
         username: action.newUser.name,
         id: action.newUser.id,
-        socketID: null
+        socketID: null,
+        userObject: action.newUser.userObject
       },
       account: 'user'
     };
@@ -99,7 +101,8 @@ export default function auth(state = initialState, action = {}) {
         email: action.newPsy.email,
         name: action.newPsy.name,
         id: action.newPsy.id,
-        socketID: null
+        socketID: null,
+        userObject: action.newPsy.userObject
       },
       account: 'psy'
     };

@@ -43,14 +43,12 @@ export default class EditProfile extends Component {
   }
 
   myAccount() {
-    console.log("gotoedit");
     this.props.history.push('/edit');
   }
   gotoChat() {
     this.props.history.push('/chat');
   }
   gotoContact() {
-    console.log("gotocontact");
     this.props.history.push('/contact');
   }
 

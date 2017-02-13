@@ -20,7 +20,9 @@ import Code from 'material-ui/lib/svg-icons/action/redeem';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
-import Stepper from 'react-stepper-horizontal'
+import Stepper from 'react-stepper-horizontal';
+
+var moment = require('moment');
 
 import { connect } from 'react-redux';
 import * as actions from '../actions/authActions';
@@ -190,7 +192,7 @@ class Register extends React.Component {
   }
 
   _dateChange(e, date) {
-    this.setState({dob: date})
+    this.setState({dob: moment.parseZone(date).format("DD/MM/YYYY")})
   }
 
   _regionChange(e, index, value) {

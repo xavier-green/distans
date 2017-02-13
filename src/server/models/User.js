@@ -6,6 +6,7 @@ var UserSchema = mongoose.Schema({
   password : { type: String, required: true },
   email : String,
   sex : String,
+  dob : String,
   psy_wanted :  mongoose.Schema.Types.Mixed
 });
 

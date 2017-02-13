@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import MessageComposer from './MessageComposer';
-import MessageListItem from './MessageListItem';
+import MessageListItem from './MessageListItemBeta';
 import * as actions from '../actions/actions';
 import * as authActions from '../actions/authActions';
 import TypingListItem from './TypingListItem';
@@ -14,6 +14,11 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import Snackbar from 'material-ui/lib/snackbar';
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
+import Card from 'material-ui/lib/card/card';
+import CardActions from 'material-ui/lib/card/card-actions';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardText from 'material-ui/lib/card/card-text';
+import CardTitle from 'material-ui/lib/card/card-title';
 
 export default class Chat extends Component {
 
@@ -145,7 +150,16 @@ export default class Chat extends Component {
       title = "Bonjour "+name+" ! ";
     }
     var el = (
-      <h1>Veuillez selectionner un element sur la gauche</h1>
+      <Card style={{marginTop:'25px',marginRight:'16px'}}>
+        <CardTitle title="Bienvenue !" subtitle="Votre dashboard" titleStyle={{fontSize:'30px'}} />
+        <CardText style={{fontSize:'16px'}}>
+          Cette plateforme est la toute première version de DistAns.<br/>
+          Nous voulons donner la meilleure expérience possible à vous, psychologues, ainsi que tous les patients qui
+          viendront à votre rencontre. C'est donc dans ce process que vous nous demandons de nous faire part de toute
+          suggestion ou bug afin que vous mettions le plus souvent à jour cet outil d'échange.<br/><br/>
+          Nous vous remercions de nous avoir fait confiance, vous pouvez maintenant <b>choisir un patient sur la gauche</b>
+        </CardText>
+      </Card>
     );
     if (activeChannel !== "0") {
       el = (

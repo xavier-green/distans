@@ -32,6 +32,7 @@ module.exports = function(passport) {
         newUser.password = newUser.generateHash(password);
         newUser.email = data.email || null;
         newUser.sex = data.sex || null;
+        newUser.dob = data.dob || null;
         newUser.psy_wanted = {
           type : data.psy || null,
           sex : data.psy_sex || null,

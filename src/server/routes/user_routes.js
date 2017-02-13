@@ -2,12 +2,14 @@
 
 var bodyparser = require('body-parser');
 var User = require('../models/User.js');
+var Psy = require('../models/Psy.js');
 var multer = require("multer");
 var upload = multer({ dest: __dirname+'/uploads/' });
 var path = require("path");
 var fs = require("fs");
 var bluebird = require("bluebird");
 var renameAsync = bluebird.promisify(fs.rename);
+var sendEmail = require('./../controllers/email');
 
 module.exports = function loadUserRoutes(router, passport) {
   router.use(bodyparser.json());
@@ -40,6 +42,45 @@ module.exports = function loadUserRoutes(router, passport) {
     res.json(req.user);
   });
 
+  router.post('/edituser', (req,res,next) => {
+    let { username,email,dob,sex } = req.body;
+    if (email !== null || dob !== null || sex !== null) {
+      User.findOne({username:username}, (err,doc)=>{
+        if (email !== null) {
+          doc.email = email;
+        }
+        if (dob !== null) {
+          doc.dob = dob;
+        }
+        if (sex !== null) {
+          doc.sex = sex;
+        }
+        doc.save()
+        .then((nDoc)=>{
+          res.status(200).json(nDoc);
+        })
+      })
+    }
+  });
+
+  router.post('/editpsy', (req,res,next) => {
+    let { email,dob,sex } = req.body;
+    if (email !== null || dob !== null || sex !== null) {
+      Psy.findOne({email:email}, (err,doc)=>{
+        if (dob !== null) {
+          doc.bday = dob;
+        }
+        if (sex !== null) {
+          doc.sex = sex;
+        }
+        doc.save()
+        .then((nDoc)=>{
+          res.status(200).json(nDoc);
+        })
+      })
+    }
+  });
+
   router.post('/fileupload', upload.array('file',2), (req,res,next) => {
     var uploadDir = path.join(__dirname, '/uploads/');
     var files = req.files;
@@ -55,6 +96,19 @@ module.exports = function loadUserRoutes(router, passport) {
     .catch((err) => {
       console.log(err);
       res.json({success: false});
+    })
+  });
+
+  router.post('/sendcontact', (req,res,next)=>{
+    let { subject,email,message } = req.body;
+    sendEmail(email,subject,message)
+    .then((mail)=>{
+      console.log("Email sent");
+      console.log(mail);
+      res.status(200);
+    })
+    .catch((err)=>{
+      res.status(500).json(err);
     })
   })
 

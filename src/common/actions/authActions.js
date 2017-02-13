@@ -40,10 +40,48 @@ function requestSignUp() {
   }
 }
 
+export function editUser(username, email, dob, sex) {
+  return dispatch => {
+    return axios.post('/api/edituser', {
+      username,
+      email,
+      dob,
+      sex
+    })
+    .then((resp)=>{
+      let data = resp.data;
+      console.log(data);
+      dispatch(receiveUser(data));
+    })
+  }
+}
+
+export function editPsy(email, dob, sex) {
+  return dispatch => {
+    return axios.post('/api/editpsy', {
+      email,
+      dob,
+      sex
+    })
+    .then((resp)=>{
+      let data = resp.data;
+      console.log(data);
+      dispatch(receivePsy(data));
+    })
+  }
+}
+
 function receiveUser(user) {
+  var id = user._id;
+  delete user._id;
+  delete user.password;
+  delete user.__v;
+  delete user.psy_wanted;
+
   const newUser = {
     name: user.username,
-    id: user._id
+    id: id,
+    userObject : user
   }
   return {
     type: types.AUTH_SIGNUP_SUCCESS,
@@ -52,10 +90,18 @@ function receiveUser(user) {
 }
 
 function receivePsy(psy) {
+  let id = psy._id;
+  delete psy._id;
+  delete psy.password;
+  delete psy.__v;
+  delete psy.active;
+  delete psy.patients;
+
   const newPsy = {
     email: psy.email,
     name: psy.name,
-    id: psy._id
+    id: id,
+    userObject: psy
   }
   return {
     type: types.AUTH_SIGNUP_SUCCESS_PSY,

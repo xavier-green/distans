@@ -15,6 +15,16 @@ export function start(user, account, socket) {
   }
 }
 
+export function contact(email,subject,message) {
+  return dispatch => {
+    return axios.post('/api/sendcontact', {
+      email,
+      subject,
+      message
+    })
+  }
+}
+
 export function newError(error) {
   console.log('new error action');
   return {

@@ -13,7 +13,6 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import ContentInbox from 'material-ui/lib/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/lib/svg-icons/action/grade';
 import ContentSend from 'material-ui/lib/svg-icons/content/send';
-import ContentDrafts from 'material-ui/lib/svg-icons/content/drafts';
 import Divider from 'material-ui/lib/divider';
 import Checkbox from 'material-ui/lib/checkbox';
 
@@ -54,6 +53,7 @@ export default class BarComponent extends Component {
               <ListItem
                 primaryText={channel.utilisateur.name}
                 onClick={this.props.onClick.bind(null,channel)}
+                rightIcon={<ContentSend />}
               />
             )}
           </List>
@@ -71,7 +71,7 @@ export default class BarComponent extends Component {
             />
             <ListItem
               primaryText="Contact"
-              secondaryText="Contactez nous ou prenez RDV"
+              secondaryText="Contactez nous"
               onClick={this.props.gotoContact}
             />
           </List>
