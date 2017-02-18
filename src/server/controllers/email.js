@@ -6,7 +6,7 @@ var transporter = nodemailer.createTransport('smtps://'+process.env.GMAIL_USER.r
 
 // setup e-mail data with unicode symbols
 var mailOptions = {
-    from: 'contactdistans@gmail.com', // sender address
+    from: '"ContactDistans" <contactdistans@gmail.com>', // sender address
     to: 'contactdistans@gmail.com', // list of receivers
     subject: '', // Subject line
     html: '' // html body
