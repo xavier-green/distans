@@ -1,8 +1,20 @@
 var nodemailer = require('nodemailer');
 var bluebird = require("bluebird");
+let aws = require('aws-sdk');
 
-// create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport('smtps://'+process.env.GMAIL_USER.replace("@","%40")+':'+process.env.GMAIL_PASS.replace("@","%40")+'@smtp.gmail.com');
+let transporter = null;
+
+if (process.env.NODE_ENV === 'production') {
+	console.log("Using AWS to send email");
+	aws.config.loadFromPath('config.json');
+	transporter = nodemailer.createTransport({
+	    SES: new aws.SES({
+	        apiVersion: 'latest'
+	    })
+	});
+} else {
+	var transporter = nodemailer.createTransport('smtps://'+process.env.GMAIL_USER.replace("@","%40")+':'+process.env.GMAIL_PASS.replace("@","%40")+'@smtp.gmail.com');
+}
 
 // setup e-mail data with unicode symbols
 var mailOptions = {

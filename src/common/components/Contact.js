@@ -61,7 +61,7 @@ export default class Contact extends React.Component {
                   ""
                 }
                 disabled={
-                  this.state.email == null ?
+                  (this.props.user.email == null || this.props.user.userObject.email == null) ?
                   false :
                   true
                 }
