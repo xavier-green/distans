@@ -235,7 +235,7 @@ class Register extends React.Component {
     return (
       <div>
         <AppBar
-          title="Création de compte utilisateur"
+          title="DistAns - Création de compte utilisateur"
         />
         <div style={{marginLeft:'20%',marginRight:'20%',marginTop:'50px'}}>
           <Card>

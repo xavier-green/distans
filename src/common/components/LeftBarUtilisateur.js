@@ -62,7 +62,7 @@ export default class BarComponent extends Component {
             <ListItem
               primaryText="Profil"
               key='profil'
-              secondaryText="Accèdez ici à tous vos paramètres"
+              secondaryText="Accédez ici à tous vos paramètres"
               onClick={this.props.myAccount}
             />
             <ListItem

@@ -45,6 +45,7 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
+    debugger;
     const { socket, user, dispatch, activeChannel } = this.props;
     socket.emit('chat mounted', user);
     // socket.emit('join channel', 123);
@@ -155,8 +156,8 @@ export default class Chat extends Component {
         <CardText style={{fontSize:'16px'}}>
           Cette plateforme est la toute première version de DistAns.<br/>
           Nous voulons donner la meilleure expérience possible à vous, psychologues, ainsi que tous les patients qui
-          viendront à votre rencontre. C'est donc dans ce process que vous nous demandons de nous faire part de toute
-          suggestion ou bug afin que vous mettions le plus souvent à jour cet outil d'échange.<br/><br/>
+          viendront à votre rencontre. C'est donc dans ce processus que vous nous demandons de nous faire part de toute
+          suggestion ou bug afin que nous mettions le plus souvent à jour cet outil d'échange.<br/><br/>
           Nous vous remercions de nous avoir fait confiance, vous pouvez maintenant <b>choisir un patient sur la gauche</b>
         </CardText>
       </Card>

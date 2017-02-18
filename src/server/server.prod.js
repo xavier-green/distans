@@ -104,6 +104,7 @@ function renderFullPage(html, initialState) {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Short+Stack" />
         <title>Distans</title>
       </head>
       <body>

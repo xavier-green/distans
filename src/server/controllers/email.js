@@ -6,7 +6,7 @@ var transporter = nodemailer.createTransport('smtps://'+process.env.GMAIL_USER.r
 
 // setup e-mail data with unicode symbols
 var mailOptions = {
-    from: '', // sender address
+    from: 'contactdistans@gmail.com', // sender address
     to: 'contactdistans@gmail.com', // list of receivers
     subject: '', // Subject line
     html: '' // html body
@@ -15,7 +15,6 @@ var mailOptions = {
 bluebird.promisifyAll(transporter);
 
 function sendEmail(email,subject,content) {
-	mailOptions.from = email;
 	mailOptions.subject = subject;
 	mailOptions.html = content;
 	return transporter.sendMailAsync(mailOptions);

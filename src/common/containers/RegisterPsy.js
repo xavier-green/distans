@@ -159,12 +159,12 @@ class Docs extends React.Component {
 
     var passportDrop = (
       <Dropzone onDrop={this.props.onDrop.bind(this,'passeport')}>
-        <div>Passeport / CI</div>
+        <div style={{textAlign:'center',marginTop:'44%'}}>Passeport / CI</div>
       </Dropzone>
     );
     var adeliDrop = (
       <Dropzone onDrop={this.props.onDrop.bind(this,'adeli')}>
-        <div>ADELI</div>
+        <div style={{textAlign:'center',marginTop:'44%'}}>ADELI</div>
       </Dropzone>
     );
     var okPassport = (
@@ -180,7 +180,7 @@ class Docs extends React.Component {
       <CardTitle title="Pièces à joindre" subtitle="Veuillez ajouter une photocopie de votre passeport / carte d'identité et certificat ADELI pour finaliser l'inscription." />
       <CardText>
         <GridList cols={2} cellHeight={205}>
-          <GridTile key={3}>
+          <GridTile key={3} style={{marginLeft:'50%'}}>
             {
               this.props.passeport ?
               okPassport :
@@ -283,7 +283,7 @@ class Register extends React.Component {
     return (
       <div>
         <AppBar
-          title="Création de compte psychologue"
+          title="DistAns - Création de compte psychologue"
         />
         <div style={{marginLeft:'15%',marginRight:'15%',marginTop:'50px'}}>
           <Card>

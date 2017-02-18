@@ -101,13 +101,15 @@ module.exports = function loadUserRoutes(router, passport) {
 
   router.post('/sendcontact', (req,res,next)=>{
     let { subject,email,message } = req.body;
+    console.log('Sending email from: '+email);
     sendEmail(email,subject,message)
     .then((mail)=>{
       console.log("Email sent");
       console.log(mail);
-      res.status(200);
+      res.status(200).json({ok:true});
     })
     .catch((err)=>{
+      console.log(err);
       res.status(500).json(err);
     })
   })
