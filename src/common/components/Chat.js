@@ -19,6 +19,24 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
+import TextField from 'material-ui/lib/text-field';
+import SelectField from 'material-ui/lib/select-field';
+
+let backImage = '/assets/back.jpg';
+
+const items = [
+  <MenuItem key={1} value="physique" primaryText="Rendez-vous physique"/>,
+  <MenuItem key={2} value="distance" primaryText="Rendez-vous à distance par appel vidéo"/>,
+];
+
+const backStyle = {
+  height:'90vh',
+  overflowY:'scroll',
+  overflowX:'hidden',
+  backgroundImage: 'url('+backImage+')',
+  backgroundSize: 'cover',
+  paddingLeft: '15px'
+};
 
 export default class Chat extends Component {
 
@@ -40,12 +58,17 @@ export default class Chat extends Component {
       currentPatient: null,
       error: false,
       errorMessage: '',
-      dialog: false
+      dialog: false,
+      rdv: false,
+      message: '',
+      phone: '',
+      type: '',
+      email: this.props.user.email || this.props.user.userObject.email || null,
+      msgSent: false
     }
   }
 
   componentDidMount() {
-    debugger;
     const { socket, user, dispatch, activeChannel } = this.props;
     socket.emit('chat mounted', user);
     // socket.emit('join channel', 123);
@@ -69,7 +92,6 @@ export default class Chat extends Component {
     );
   }
   componentDidUpdate() {
-    console.log(this.props);
     if (this.props.errors.length && !this.state.error) {
       this.setState({
         error: true,
@@ -120,6 +142,26 @@ export default class Chat extends Component {
   handleClose() {
     this.setState({dialog: false});
   }
+  fermer() {
+    this.setState({rdv: false});
+  }
+  _handleChange(element,e) {
+    var data = {};
+    data[element] = e.target.value;
+    this.setState(data);
+  }
+  _selectChange(e, index, value) {
+    this.setState({type: value})
+  }
+  rdv() {
+    this.setState({rdv: true,dialog: false})
+  }
+  send() {
+    let { email,message,phone,type } = this.state;
+    let beginning = 'From: '+email+' ( '+phone+' )<br/>Type de rdv: '+type+'<br/><br/><br/>Message: ';
+    this.props.dispatch(actions.contact(email, 'Prise de RDV', beginning+message));
+    this.setState({msgSent: true, message: '', rdv: false});
+  }
   render() {
     const { messages, socket, channels, activeChannel, account, typers, dispatch, user, screenWidth, history, currentPatient } = this.props;
     //const filteredMessages = messages.filter(message => message.channelID === activeChannel);
@@ -129,7 +171,7 @@ export default class Chat extends Component {
         label="RDV"
         secondary={true}
         keyboardFocused={true}
-        onTouchTap={::this.handleClose}
+        onTouchTap={::this.rdv}
       />,
       <FlatButton
         label="Non"
@@ -138,7 +180,19 @@ export default class Chat extends Component {
       />,
       <FlatButton
         label="Contact"
-        onTouchTap={::this.handleClose}
+        onTouchTap={::this.gotoContact}
+      />
+    ];
+    const okay = [
+    <FlatButton
+        label="Annuler"
+        primary={true}
+        onTouchTap={::this.fermer}
+      />,
+      <FlatButton
+          label="Envoyer"
+          secondary={true}
+          onTouchTap={::this.send}
       />
     ];
     var title = null;
@@ -163,6 +217,7 @@ export default class Chat extends Component {
       </Card>
     );
     if (activeChannel !== "0") {
+      backStyle.height = '85vh';
       el = (
         <div className="main">
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
@@ -196,7 +251,7 @@ export default class Chat extends Component {
           <LeftBarPsy gotoContact={::this.gotoContact} gotoChat={::this.gotoChat} myAccount={::this.myAccount} history={history} socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} /> :
           <LeftBarUser gotoContact={::this.gotoContact} gotoChat={::this.gotoChat} myAccount={::this.myAccount} history={history} socket={socket} messages={messages} dispatch={dispatch} />
         }
-        <div id="sbottom" style={{height:'85vh',overflowY:'scroll',overflowX:'hidden'}}>
+        <div id="sbottom" style={backStyle}>
           {el}
         </div>
         <Snackbar
@@ -212,11 +267,57 @@ export default class Chat extends Component {
           actions={actions}
           modal={false}
           open={this.state.dialog}
-          onRequestClose={::this.handleClose}
         >
           Vous avez atteint la limite de 50 messages que vous pouviez envoyer gratuitement à votre psychologue.<br/>
           Si vous vous sentez prêt à prendre rendez-vous avec votre psychologue actuel veuillez confirmer en cliquant sur RDV
-          ci-dessous. Si vous avez une hésitation (ou problème, tel que l'affectation des psychologues, n'hésitez pas à nous contacter !
+          ci-dessous. Si vous avez une hésitation (ou problème, tel que l'affectation des psychologues) n'hésitez pas à nous contacter !
+        </Dialog>
+        <Dialog
+          title="Demande de RDV"
+          actions={okay}
+          modal={false}
+          open={this.state.rdv}
+          onRequestClose={this.fermer}
+        >
+          <TextField
+                style={{width:'70%'}}
+                value={this.state.email}
+                hintText={
+                  this.state.email == null ?
+                  "Entrez un email de contact pour recevoir la réponse" :
+                  ""
+                }
+                disabled={
+                  this.state.email == null ?
+                  false :
+                  true
+                }
+                onChange={::this._handleChange.bind(this,'email')}
+              />
+            <br />
+            <TextField
+            style={{width:'70%'}}
+              floatingLabelText="Entrez votre numéro de téléphone"
+              value={this.state.phone}
+              onChange={::this._handleChange.bind(this,'phone')}
+            /><br />
+            <SelectField
+            floatingLabelText="Choisissez un type de RDV"
+            value={this.state.type}
+            onChange={::this._selectChange}
+            style={{width:'70%'}}
+          >
+            {items}
+          </SelectField>
+            <TextField
+              hintText="Ecrivez votre message"
+              floatingLabelText="Message"
+              multiLine={true}
+              rows={3}
+              style={{width:'70%'}}
+              value={this.state.message}
+              onChange={::this._handleChange.bind(this,'message')}
+            /><br/><br/>
         </Dialog>
       </div>
     );

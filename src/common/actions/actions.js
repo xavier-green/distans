@@ -197,10 +197,10 @@ export function usernameValidationList() {
 
 export function createMessage(message, socket) {
   return dispatch => {
-    dispatch(addMessage(message))
     return axios.post('/api/newmessage', message)
     .then((resp)=>{
         if (resp.data.msgAccepted) {
+          dispatch(addMessage(message))
           console.log("Okay, sending msg");
           socket.emit('new message', message);
         } else {

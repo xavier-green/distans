@@ -56,6 +56,8 @@ app.use('/api', usersRouter);
 app.use('/api', channelRouter);
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
 
+app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
+
 app.use('/', express.static(path.join(__dirname, '..', 'static')));
 
 app.get('/*', function(req, res) {

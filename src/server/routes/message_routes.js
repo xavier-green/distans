@@ -49,7 +49,7 @@ module.exports = function(router) {
         console.log("All saved, count: "+channel.msg_count);
         console.log(copy.fromPsy);
         var msgAccepted = false;
-        if (channel.msg_count<7 || copy.fromPsy) {
+        if (channel.msg_count<10 || copy.fromPsy) {
           msgAccepted = true;
           newMessage.save()
           .then((msg) => {

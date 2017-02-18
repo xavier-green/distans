@@ -48,6 +48,8 @@ app.use('/api', messageRouter);
 app.use('/api', usersRouter);
 app.use('/api', channelRouter);
 
+app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
+
 app.use('/', express.static(path.join(__dirname, '../..', 'static')));
 
 app.get('/*', function(req, res) {
