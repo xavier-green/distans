@@ -206,7 +206,7 @@ export default class Chat extends Component {
     }
     var el = (
       <Card style={{marginTop:'25px',marginRight:'16px'}}>
-        <CardTitle title="Bienvenue !" subtitle="Votre dashboard" titleStyle={{fontSize:'30px'}} />
+        <CardTitle title="Bienvenue !" titleStyle={{fontSize:'30px'}} />
         <CardText style={{fontSize:'16px'}}>
           Cette plateforme est la toute première version de DistAns.<br/>
           Nous voulons donner la meilleure expérience possible à vous, psychologues, ainsi que tous les patients qui

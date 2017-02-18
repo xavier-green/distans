@@ -100,7 +100,7 @@ export default class EditProfile extends Component {
           <LeftBarPsy gotoContact={::this.gotoContact} gotoChat={::this.gotoChat} myAccount={::this.myAccount} socket={socket} onClick={::this.changeActiveChannel} channels={channels} messages={messages} dispatch={dispatch} /> :
           <LeftBarUser gotoContact={::this.gotoContact} gotoChat={::this.gotoChat} myAccount={::this.myAccount} socket={socket} messages={messages} dispatch={dispatch} />
         }
-        <div id="sbottom" style={{width:'73%',height:'80vh',overflowY:'scroll',overflowX:'hidden'}}>
+        <div id="sbottom" style={{width:'73%',height:'80vh',overflowY:'scroll',overflowX:'hidden',paddingLeft:'15px'}}>
         {element}
         </div>
       </div>
