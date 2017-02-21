@@ -6,6 +6,7 @@ import TextField from 'material-ui/lib/text-field';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button';
+import CardTitle from 'material-ui/lib/card/card-title';
 
 
 import { connect } from 'react-redux';
@@ -48,27 +49,30 @@ class Register extends React.Component {
         />
         <div style={{marginLeft:'30%',marginRight:'30%',marginTop:'50px',textAlign:'center'}}>
           <Card>
-          <SelectField
-            floatingLabelText="Choisissez une catégorie pour votre problème"
-            value={this.state.type}
-            onChange={::this._selectChange}
-            style={{width:'70%'}}
-          >
-            {items}
-          </SelectField>
-          <TextField
-            floatingLabelText="Nom d'utilisateur ou email"
-            underlineStyle={{color:'rgb(0, 188, 212)'}}
-            onChange={::this._handleChange.bind(this,'login')}
-            style={{width:'70%'}}
-          /><br/>
-          <TextField
-            floatingLabelText="Mot de passe"
-            underlineStyle={{color:'rgb(0, 188, 212)'}}
-            type="password"
-            onChange={::this._handleChange.bind(this,'password')}
-            style={{width:'70%'}}
-          /><br/>
+          <CardTitle titleStyle={{textAlign:'center',color:'rgba(13, 92, 167, 0.87)',fontFamily:"Short Stack",fontSize:'38px',paddingTop:'20px'}} title="Le concept" />
+          <CardText>
+            <SelectField
+              floatingLabelText="Choisissez une catégorie pour votre problème"
+              value={this.state.type}
+              onChange={::this._selectChange}
+              style={{width:'70%'}}
+            >
+              {items}
+            </SelectField>
+            <TextField
+              floatingLabelText="Nom d'utilisateur ou email"
+              underlineStyle={{color:'rgb(0, 188, 212)'}}
+              onChange={::this._handleChange.bind(this,'login')}
+              style={{width:'70%'}}
+            /><br/>
+            <TextField
+              floatingLabelText="Mot de passe"
+              underlineStyle={{color:'rgb(0, 188, 212)'}}
+              type="password"
+              onChange={::this._handleChange.bind(this,'password')}
+              style={{width:'70%'}}
+            /><br/>
+          </CardText>
           </Card><br/>
           <a onClick={::this.signUp} style={{margin:'0 auto',float:'right'}}>
             <RaisedButton

@@ -23,7 +23,7 @@ class App extends React.Component {
       );
     }
     return (
-      <div style={{height: '100%', backgroundColor:'lightblue'}} >
+      <div style={{height: '100vh', backgroundColor:'lightblue'}} >
         {this.props.children}
       </div>
     );
