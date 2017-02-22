@@ -7,6 +7,7 @@ var UserSchema = mongoose.Schema({
   email : String,
   sex : String,
   dob : String,
+  videoconf: Boolean,
   psy_wanted :  mongoose.Schema.Types.Mixed
 });
 

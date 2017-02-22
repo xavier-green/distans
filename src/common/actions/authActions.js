@@ -191,6 +191,13 @@ function receiveSignIn(username) {
   }
 }
 
+function loginError(error) {
+  return {
+    type: 'LOGIN_ERROR',
+    error
+  }
+}
+
 export function signIn(user) {
   var url = null;
   if (user.type == "0") {
@@ -203,6 +210,8 @@ export function signIn(user) {
     return axios
     .post(url, user)
     .then((response) => {
+      console.log("axios response");
+      console.log(response);
       if(response.status == 200) {
         if (user.type == "0") {
           cookie.save('username', user.login)
@@ -217,9 +226,13 @@ export function signIn(user) {
             browserHistory.push('/unactive');
           }
         }
+      } else {
+        dispatch(loginError("Error signin in"))
       }
     })
-    .catch(error => {console.log(error);});
+    .catch(error => {
+      dispatch(loginError("Error signin in"))
+    });
   };
 }
 

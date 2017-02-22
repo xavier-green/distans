@@ -8,7 +8,10 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardTitle from 'material-ui/lib/card/card-title';
 import Forward from 'material-ui/lib/svg-icons/content/forward';
+import CardMedia from 'material-ui/lib/card/card-media';
 import {Link} from 'react-router'
+
+let introImage = '/assets/intro-psy.png';
 
 
 import { connect } from 'react-redux';
@@ -32,59 +35,18 @@ class Start extends React.Component {
         />
         <div style={{marginTop:'50px',textAlign:'justify'}}>
           <Card style={{width:'70%',margin:'0 auto'}}>
-          <CardTitle titleStyle={{textAlign:'center',color:'rgba(13, 92, 167, 0.87)',fontFamily:"Short Stack",fontSize:'38px',paddingTop:'20px'}} title="Le concept" />
-            <CardText>
-                <div style={{width:'100%'}}>
-                  <div style={{float:'left',width:'5%'}}>
-                    <Forward style={{fill:'rgba(13, 92, 167, 0.87)'}}/> 
-                  </div>
-                  <div style={{float:'left',width:'95%'}}>
-                  DistAns vous aide à entrer en contact avec les patients dont la problématique correspond le mieux
-
-à votre domaine de compétences.
-                  </div>
-                </div>
-                <br/><br/><br/><br/>
-                <div style={{width:'100%'}}>
-                  <div style={{float:'left',width:'5%'}}>
-                    <Forward style={{fill:'rgba(13, 92, 167, 0.87)'}} /> 
-                  </div>
-                  <div style={{float:'left',width:'95%'}}>
-                  A votre inscription, vous vous verrez demander une copie de pièce d’identité et certificat ADELI
-
-pour vérifier votre identité et votre formation. Nous supprimons ces éléments de notre base de
-
-données dès vérification de votre identité.
-                  </div>
-                </div>
-                <br/><br/><br/><br/>
-                <div style={{width:'100%'}}>
-                  <div style={{float:'left',width:'5%'}}>
-                    <Forward style={{fill:'rgba(13, 92, 167, 0.87)'}} /> 
-                  </div>
-                  <div style={{float:'left',width:'95%'}}>
-                  En vous connectant, vous vous verrez attribuer des patients, avec qui vous vous engagez à
-
-échanger par écrit (chat en ligne) pour un échange de 50 messages, afin de le mettre en confiance
-
-et vérifier que vous êtes aptes à l’aider. A la fin de cette période d’échange, le chat sera bloqué. Le
-
-patient pourra alors vous demander ou non un rendez-vous. En cas de réponse positive, nous lui
-
-communiquerons votre numéro de téléphone / autre moyen de contact.
-                  </div>
-                </div>
-                <br/><br/><br/><br/>
-            </CardText>
+          <CardMedia>
+            <img src={introImage} />
+          </CardMedia>
+          </Card><br/>
+          <div style={{display:'block',marginLeft:'auto',marginRight:'auto',width:'88px'}}>
             <Link to={`/register/psy`}>
-              <a style={{margin:'0 auto',float:'right',marginRight:'20px',marginBottom:'20px'}}>
                 <RaisedButton
                   label="Inscription"
                   primary={true}
                 />
-              </a>
             </Link>
-          </Card><br/>
+          </div>
         </div>
       </div>
     );

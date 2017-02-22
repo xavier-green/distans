@@ -9,7 +9,8 @@ var PsySchema = mongoose.Schema({
   bday : { type: String, required: true },
   region : { type: String, required: true },
   patients: { type: Number, default:0 },
-  active: { type:Boolean, default: false}
+  active: { type:Boolean, default: false},
+  videoconf: { type:Boolean, default: true}
 });
 
 PsySchema.methods.generateHash = function(password) {

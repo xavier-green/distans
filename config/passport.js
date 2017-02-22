@@ -20,19 +20,24 @@ module.exports = function(passport) {
   },
   function(req, username, password, done) {
     var data = req.body;
+    console.log("creating user "+username);
     User.findOne({ 'username': username}, function(err, user) {
       if (err) {
+        console.log(err);
         return done(err);
       }
       if (user) {
+        console.log("error, user already exists");
         return done(null, false);
       } else {
+        console.log("creating user");
         var newUser = new User();
         newUser.username = username;
         newUser.password = newUser.generateHash(password);
         newUser.email = data.email || null;
         newUser.sex = data.sex || null;
         newUser.dob = data.dob || null;
+        newUser.videoconf = data.videoconf;
         newUser.psy_wanted = {
           type : data.psy || null,
           sex : data.psy_sex || null,
@@ -40,8 +45,10 @@ module.exports = function(passport) {
         };
         newUser.save(function(err, user) {
           if (err) {
+            console.log(err);
             throw err;
           }
+          console.log("all good");
           return done(null, newUser);
         });
       }
@@ -56,13 +63,17 @@ module.exports = function(passport) {
   function(req, username, password, done) {
     var data = req.body;
     var email = data.email;
+    console.log("creating account for "+email);
     Psy.findOne({ 'email': email}, function(err, user) {
       if (err) {
+        console.log(err);
         return done(err);
       }
       if (user) {
+        console.log("error, user already exists");
         return done(null, false);
       } else {
+        console.log("creating new user");
         var newUser = new Psy();
         newUser.password = newUser.generateHash(password);
         newUser.email = data.email;
@@ -72,8 +83,10 @@ module.exports = function(passport) {
         newUser.region = data.region;
         newUser.save(function(err, user) {
           if (err) {
+            console.log(err);
             throw err;
           }
+          console.log("all good !");
           return done(null, newUser);
         });
       }
@@ -86,16 +99,21 @@ module.exports = function(passport) {
     passReqToCallback: true
   },
   function(req, username, password, done) {
+    console.log("looking for user "+username);
     User.findOne({ username: username}, function(err, user) {
       if (err) {
+        console.log(err);
         return done(err);
       }
       if (!user) {
+        console.log("username doesnt exist");
         return done(null, false);
       }
       if (!user.validPassword(password)) {
+        console.log("wrong password");
         return done(null, false)
       }
+      console.log("all good!");
       return done(null, user);
     });
   }));
