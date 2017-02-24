@@ -88,7 +88,7 @@ class Register extends React.Component {
           </CardText>
           </Card><br/>
           <div style={{margin: '0 auto'}}>
-            (Inscription : <Link to={`/start/utilisateur`}><FlatButton label="utilisateur" secondary={true} /></Link> / <Link to={`/start/psy`}><FlatButton label="psychologue" secondary={true} /></Link>)
+            Inscription : <Link to={`/start/utilisateur`}><FlatButton label="utilisateur" secondary={true} /></Link> / <Link to={`/start/psy`}><FlatButton label="psychologue" secondary={true} /></Link>
           </div>
         </div>
       </div>

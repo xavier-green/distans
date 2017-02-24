@@ -58,9 +58,9 @@ app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
 
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 
-app.use('/', express.static(path.join(__dirname, '..', 'static')));
+app.use('/', express.static(path.join(__dirname, '..', '..', 'website')));
 
-app.get('/*', function(req, res) {
+app.get('/app/*', function(req, res) {
   const history = createMemoryHistory();
   const location = history.createLocation({
     pathname: req.url
