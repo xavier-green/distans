@@ -50,7 +50,7 @@ app.use('/api', channelRouter);
 
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 
-app.use('/', express.static(path.join(__dirname, '../..', 'static')));
+app.use('/', express.static(path.join(__dirname, '..', '..', 'website')));
 
 app.get('/*', function(req, res) {
 
