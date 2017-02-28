@@ -232,7 +232,7 @@ class Contact extends React.Component {
             /><br /><br/>
             <div style={{display:'flex'}}>
               <Dates color={blue500} style={styles.icon}/>
-              <DatePicker value={this.props.bday} onChange={this.props._dateChange} hintText="Date de naissance" mode="landscape"/>
+              <DatePicker onChange={this.props._dateChange} hintText="Date de naissance" mode="landscape"/>
             </div>
             </CardText>
           </GridTile>

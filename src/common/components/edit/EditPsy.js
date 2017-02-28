@@ -71,7 +71,7 @@ export default class EditUser extends React.Component {
     return (
       <div>
       <Card style={{marginTop:'25px'}}>
-        <CardTitle title="Clickez pour modifier l'information que vous souhaitez" subtitle="N'oubliez pas de sauvegarder avant de quitter !" />
+        <CardTitle title="Cliquez pour modifier l'information que vous souhaitez" subtitle="N'oubliez pas de sauvegarder avant de quitter !" />
         <CardText>
           <Email color={blue500} style={styles.icon}/>
           <TextField
