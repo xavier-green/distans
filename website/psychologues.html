@@ -89,6 +89,8 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
                   <li><a id="price_menu_psy" href="#price">Tarif  </a></li>
 
                   <li><a id="contact_menu_psy" href="#contact">Contact </a></li>
+
+                  <li><a id="contact_menu_psy" onClick="window.location = '/login'" class="button-o button-success button-lg hover-ripple-out animated">Se connecter </a></li>
                 </ul>
               </div>
             </div>
@@ -97,21 +99,22 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
 
 
         <!-- Intro Area
-        ===================================== -->
-        <header class="intro parallax-window">
-          <div class="intro-body" style="background-color:rgba(0,0,0,0.6) !important;">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-12">
-                  <h1 class="brand-heading font-montserrat text-uppercase color-light">Communiquez avec des patients, <span class="font-pacifico text-capitalize color-green">en ligne.</span></h1>
-                  <a href="/start/psy" id="first_signup_psy" class="button button-success button-lg hover-ripple-out animated" data-animation="fadeInUp" data-animation-delay="1200">S'inscrire</a>
-                  <a id="learn_more_psy" href="#welcome" class="button-o button-green button-lg hover-bounce-to-right ml10 animated allerwelcome" data-animation="fadeInUp" data-animation-delay="1200">En savoir plus</a>
-                </div>
-              </div>
-            </div>
-            <div id="video-container"></div>
+  ===================================== -->
+  <header class="intro parallax-window">
+    <div class="intro-body" style="background-color:rgba(0,0,0,0.6) !important;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="brand-heading font-montserrat text-uppercase color-light">Échanger avec un psychologue <span class="font-pacifico text-capitalize color-green">en ligne.</span></h1>
+            <p class="intro-text color-light text-open-sans text-uppercase mb35">Particulier, entreprise ou établissement scolaire, une solution adaptée à chaque besoin.</p>
+            <a href="/start/psy" id="first_signup_uti" class="button button-success button-lg hover-ripple-out animated" data-animation="fadeInUp" data-animation-delay="1200">S'inscrire</a>
+            <a id="learn_more_uti" href="#welcome" class="button-o button-green button-lg hover-bounce-to-right ml10 animated allerwelcome" data-animation="fadeInUp" data-animation-delay="1200">En savoir plus</a>
           </div>
-        </header>
+        </div>
+      </div>
+      <div id="video-container"></div>
+    </div>
+  </header>
 
           <!-- Welcome Area
         ===================================== -->
@@ -577,8 +580,7 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
                 <!-- footer bottom start -->
                 <div class="col-md-6 col-sm-6 col-xs-6 pull-right">
                   <p class="text-right">
-                    <a id="privacy_psy" href="#" class="mr20">Privacy Policy</a>
-                    <a id="terms_psy" href="#" class="mr20">Term of Use</a>
+                    <a id="terms_psy" href="conditions.html" class="mr20">Conditions d'utilisations</a>
                   </p>
                 </div>
                 <!-- footer bottom end -->
