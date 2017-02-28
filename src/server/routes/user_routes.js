@@ -9,7 +9,7 @@ var path = require("path");
 var fs = require("fs");
 var bluebird = require("bluebird");
 var renameAsync = bluebird.promisify(fs.rename);
-var sendEmail = require('./../controllers/email');
+var sendEmail = require('./../controllers/email').sendEmail;
 
 module.exports = function loadUserRoutes(router, passport) {
   router.use(bodyparser.json());

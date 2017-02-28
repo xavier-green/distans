@@ -26,10 +26,15 @@ var mailOptions = {
 
 bluebird.promisifyAll(transporter);
 
-function sendEmail(email,subject,content) {
+exports.sendEmail = (email,subject,content) => {
 	mailOptions.subject = subject;
 	mailOptions.html = content;
 	return transporter.sendMailAsync(mailOptions);
 }
 
-module.exports = sendEmail;
+exports.sendEmailTo = (email,subject,content) => {
+	mailOptions.to = email;
+	mailOptions.subject = subject;
+	mailOptions.html = content;
+	return transporter.sendMailAsync(mailOptions);
+}

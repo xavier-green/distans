@@ -4,6 +4,7 @@ var User = require('../models/User.js');
 var Psy = require('../models/Psy.js');
 var Channel = require('../models/Channel.js');
 var bluebird = require("bluebird");
+var sendEmail = require('./../controllers/email').sendEmailTo;
 
 module.exports = function(router) {
   router.use(bodyparser.json());
@@ -120,6 +121,7 @@ module.exports = function(router) {
           psy.patients += 1;
           psy.save()
           .then((doc) => {
+            sendEmail(psy.email, "Vous avez un nouveau patient !", "Bonjour<br/><br/>Allez vite voir sur la plateforme, vous avez un nouveau patient !")
             res.json(doc)
           })
           .catch((er) => {
@@ -160,6 +162,7 @@ module.exports = function(router) {
               psy.patients += 1;
               psy.save()
               .then((doc) => {
+                sendEmail(psy.email, "Vous avez un nouveau patient !", "Bonjour<br/><br/>Allez vite voir sur la plateforme, vous avez un nouveau patient !")
                 res.json(doc)
               })
               .catch((er) => {
