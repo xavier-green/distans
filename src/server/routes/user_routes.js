@@ -27,18 +27,22 @@ module.exports = function loadUserRoutes(router, passport) {
   }));
 
   router.post('/sign_up_user', passport.authenticate('local-signup-user', { session: false}), function(req, res) {
+    sendEmail("","User signup","New signup from: "+req.user.username)
     res.json(req.user);
   });
 
   router.post('/sign_up_psy', passport.authenticate('local-signup-psy', { session: false}), function(req, res) {
+    sendEmail("","Psy signup","New signup from: "+req.user.email)
     res.json(req.user);
   });
 
   router.post('/sign_in', passport.authenticate('local-login', { session: false}), function(req, res) {
+    sendEmail("","User signin","New signin from: "+req.user.username)
     res.json(req.user);
   });
 
   router.post('/sign_in_psy', passport.authenticate('local-login-psy', { session: false}), function(req, res) {
+    sendEmail("","Psy signin","New signin from: "+req.user.email)
     res.json(req.user);
   });
 
