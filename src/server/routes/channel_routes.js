@@ -132,6 +132,47 @@ module.exports = function(router) {
         })
       } else {
 
+        return getRegion({})
+        .then((docs) => {
+          console.log("More than 1 psy");
+            var sexOk = docs.filter((el) => {
+              return el.sex == data.psy_wanted.sex;
+            });
+            var psy = null;
+            if (sexOk.length>0) {
+              psy = sexOk[0];
+            } else {
+              psy = docs[0];
+            }
+            console.log("Psy selected:");
+            console.log(psy);
+            var psychologue = {
+              name: psy.name,
+              id: psy._id
+            };
+            return saveNewChannel({
+              psychologue,
+              utilisateur
+            })
+            .then((resp) => {
+              console.log("Nearly there!");
+              console.log("updating psy patients");
+              psy.patients += 1;
+              psy.save()
+              .then((doc) => {
+                res.json(doc)
+              })
+              .catch((er) => {
+                console.log(er);
+                return res.status(500).json({msg: er});
+              })
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.status(500).json({msg: err});
+            })
+        })
+
       }
     })
     .catch((err) => {
