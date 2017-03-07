@@ -496,7 +496,7 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
                   <div class="col-md-3 col-sm-3 col-xs-6">
                     <span class="icon-envelope color-light el-icon2x"></span>
                     <h5 class="color-light"><strong>Email</strong></h5>
-                    <p class="color-light">contact@distans.fr</p>
+                    <p class="color-light">contactdistans@gmail.fr</p>
                   </div>
                   <!-- contact info end -->
 
@@ -511,7 +511,7 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
                       <small class="text-lowercase">Veuillez remplir le formulaire</small>
                     </h4>
                   </div>
-                  <form name="contactform" id="contactForm" method="post" action="assets/php/send.php">
+                  <form name="contactform" id="contactForm" method="post" action="/assets/php/send.php">
 
                     <!-- fullname start -->
                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
@@ -525,20 +525,6 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
                     </div>
                     <!-- email end -->
 
-                    <!-- website start -->
-                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                      <input type="url" name="senderWebsite" id="senderWebsite" class="input-md input-rounded form-control" placeholder="Entreprise" maxlength="100">
-                    </div>
-                    <!-- website end -->
-
-                    <!-- security start -->
-                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                      <input type="text" name="senderHuman" id="senderHuman" class="input-md input-rounded form-control" placeholder="" required>
-                      <input type="hidden" name="checkHuman_a" id="checkHuman_a">
-                      <input type="hidden" name="checkHuman_b" id="checkHuman_b">
-                    </div>
-                    <!-- security end -->
-
                     <!-- textarea start -->
                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                       <textarea class="form-control" name="message" id="message" rows="7" placeholder="Message" required></textarea>
@@ -551,10 +537,10 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
                     </div>
                     <!-- button end -->
 
-                    <div id="sendingMessage" class="statusMessage sending-message"><p>Sending your message. Please wait...</p></div>
-                    <div id="successMessage" class="statusMessage success-message"><p>Thanks for sending your message! We'll get back to you shortly.</p></div>
-                    <div id="failureMessage" class="statusMessage failure-message"><p>There was a problem sending your message. Please try again.</p></div>
-                    <div id="incompleteMessage" class="statusMessage"><p>Please complete all the fields in the form before sending.</p></div>
+                    <div id="sendingMessage" class="statusMessage sending-message"><p>Envoi de votre message...</p></div>
+                    <div id="successMessage" class="statusMessage success-message"><p>Merci! Nous vous répondrons le plus vite possible !</p></div>
+                    <div id="failureMessage" class="statusMessage failure-message"><p>Il y a eu un problème durant l'envoi, veuillez réessayer.</p></div>
+                    <div id="incompleteMessage" class="statusMessage"><p>Veuillez remplir tous les éléments !</p></div>
 
                   </form>
                 </div><!-- div contact end -->

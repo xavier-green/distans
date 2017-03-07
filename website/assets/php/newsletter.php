@@ -2,7 +2,7 @@
 
 // Define some constants
 define( "RECIPIENT_NAME", "Distans Admin" );
-define( "RECIPIENT_EMAIL", "xav.green.95@gmail.com" );
+define( "RECIPIENT_EMAIL", "contactdistans@gmail.com" );
 define( "EMAIL_SUBJECT", "Distans Visitor Message" );
 
 // Read the form values
