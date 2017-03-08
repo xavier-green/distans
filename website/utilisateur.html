@@ -540,47 +540,47 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
           </div><!-- col left end -->
 
           <div class="col-md-6">
-            <div class="contact contact-us-one">
-              <div class="col-sm-12 col-xs-12 text-center mb20">
-                <h4 class="pb25 bb-solid-1 text-uppercase">
-                  Contact
-                  <small class="text-lowercase">Veuillez remplir le formulaire</small>
-                </h4>
-              </div>
-              <form name="contactform" id="contactForm" method="post" action="/assets/php/send.php">
+                <div class="contact contact-us-one">
+                  <div class="col-sm-12 col-xs-12 text-center mb20">
+                    <h4 class="pb25 bb-solid-1 text-uppercase">
+                      Contact
+                      <small class="text-lowercase">Veuillez remplir le formulaire</small>
+                    </h4>
+                  </div>
+                  <form name="contactform" id="contactForm">
 
-                <!-- fullname start -->
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" name="senderName" id="senderName" class="input-md input-rounded form-control" placeholder="Nom complet*" maxlength="100" required>
-                </div>
-                <!-- fullname end -->
+                    <!-- fullname start -->
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                      <input type="text" name="senderName" id="senderName" class="input-md input-rounded form-control" placeholder="Nom complet*" maxlength="100" required>
+                    </div>
+                    <!-- fullname end -->
 
-                <!-- email start -->
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <input type="email" name="senderEmail" id="senderEmail" class="input-md input-rounded form-control" placeholder="Adresse email*" maxlength="100" required>
-                </div>
-                <!-- email end -->
+                    <!-- email start -->
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                      <input type="email" name="email" id="senderEmail" class="input-md input-rounded form-control" placeholder="Adresse email*" maxlength="100" required>
+                    </div>
+                    <!-- email end -->
 
-                <!-- textarea start -->
-                <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                  <textarea class="form-control" name="message" id="message" rows="7" placeholder="Message" required></textarea>
-                </div>
-                <!-- textarea end -->
+                    <!-- textarea start -->
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                      <textarea class="form-control" name="message" id="message" rows="7" placeholder="Message" required></textarea>
+                    </div>
+                    <!-- textarea end -->
 
-                <!-- button start -->
-                <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                  <button type="submit" name="sendMessage" id="sendMessage" class="button button-md button-block button-grad-stellar">Envoyer</button>
-                </div>
-                <!-- button end -->
+                    <!-- button start -->
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                      <button type="submit" name="sendMessage" id="sendMessage" class="button button-md button-block button-grad-stellar">Envoyer</button>
+                    </div>
+                    <!-- button end -->
 
-                <div id="sendingMessage" class="statusMessage sending-message"><p>Envoi de votre message...</p></div>
-                <div id="successMessage" class="statusMessage success-message"><p>Merci! Nous vous répondrons le plus vite possible !</p></div>
-                <div id="failureMessage" class="statusMessage failure-message"><p>Il y a eu un problème durant l'envoi, veuillez réessayer.</p></div>
-                <div id="incompleteMessage" class="statusMessage"><p>Veuillez remplir tous les éléments !</p></div>
+                    <div id="sendingMessage" class="statusMessage sending-message"><p>Envoi de votre message...</p></div>
+                    <div id="successMessage" class="statusMessage success-message"><p>Merci! Nous vous répondrons le plus vite possible !</p></div>
+                    <div id="failureMessage" class="statusMessage failure-message"><p>Il y a eu un problème durant l'envoi, veuillez réessayer.</p></div>
+                    <div id="incompleteMessage" class="statusMessage"><p>Veuillez remplir tous les éléments !</p></div>
 
-              </form>
-            </div><!-- div contact end -->
-          </div><!-- col end -->
+                  </form>
+                </div><!-- div contact end -->
+              </div><!-- col end -->
 
         </div><!-- row end -->
       </div><!-- container end -->

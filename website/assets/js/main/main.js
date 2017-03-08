@@ -335,14 +335,21 @@ $(window).load(function() {
       } else {
 
         // Yes; submit the form to the PHP script via Ajax
+        let formData = {
+        	subject: 'Contact depuis le site',
+        	email: $('#senderEmail').val(),
+        	message: $('#message').val()
+        }
 
         $('#sendingMessage').fadeIn();
         contactForm.show();
 
         $.ajax( {
-          url: contactForm.attr( 'action' ) + "?ajax=true",
-          type: contactForm.attr( 'method' ),
-          data: contactForm.serialize(),
+          url: "/api/sendcontact",
+          type: "post",
+          contentType: "application/json; charset=utf-8",
+    	  dataType: "json",
+          data: JSON.stringify(formData),
           success: submitFinished
         } );
       }
@@ -354,10 +361,10 @@ $(window).load(function() {
 
     // Handle the Ajax response
     function submitFinished( response ) {
-      response = $.trim( response );
+    	console.log(response);
       $('#sendingMessage').fadeOut();
 
-      if ( response == "success" ) {
+      if ( response.ok ) {
 
         // Form submitted successfully:
         // 1. Display the success message

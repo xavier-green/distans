@@ -28,7 +28,8 @@ bluebird.promisifyAll(transporter);
 
 exports.sendEmail = (email,subject,content) => {
 	mailOptions.subject = subject;
-	mailOptions.html = content;
+	let realContent = "Email: "+email+"<br/><br/>"+content;
+	mailOptions.html = realContent;
 	return transporter.sendMailAsync(mailOptions);
 }
 

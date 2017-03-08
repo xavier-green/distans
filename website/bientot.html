@@ -164,7 +164,7 @@ mixpanel.init("7a3fc1eb4426f9b57161a65fd5e2c2eb");</script><!-- end Mixpanel -->
       var origin = $.urlParam('origin');
       var email = $("#newsletter_email").val();
       if (email) {
-        $.post("/assets/php/newsletter.php", {email: email, origin: origin}, function(result){
+        $.post("/php/newsletter.php", {email: email, origin: origin}, function(result){
             $(".news_result").html(result);
         });
       } else {

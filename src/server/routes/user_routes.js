@@ -113,6 +113,7 @@ module.exports = function loadUserRoutes(router, passport) {
   });
 
   router.post('/sendcontact', (req,res,next)=>{
+    console.log(req.body);
     let { subject,email,message } = req.body;
     console.log('Sending email from: '+email);
     sendEmail(email,subject,message)
